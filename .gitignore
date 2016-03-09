@@ -16,9 +16,9 @@ agenda.egg-info/
 
 # configuration files
 agendadulibre
-settings.py
-production.py
-development.py
-local.py
 agenda/media/banners/
 build.log
+agenda/production.py
+agenda/development.py
+etc
+agendadulibre.sqlite

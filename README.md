@@ -26,16 +26,24 @@ Pour installer l'Agenda de l'été, vous n'avez qu'à suivre les différentes
     $ git clone https://github.com/vcorreze/agendaEteAccoord.git
     $ cd agendaEteAccoord
     $ python bootstrap.py
-    $ bin/buildout
+    $ bin/buildout -c developement.cfg -vvv
 
 Les dépendances seront téléchargées et installées dans le répertoire courant.
+
+Paramétrez la configuration d'accès à la base de données, la 
+configuration des emails etc... :
+
+    $ cp agenda/development.py.tpl agenda/development.py
+    $ vi agenda/development.py
+    
 Ensuite vous n'avez qui initialiser la base de données (SQLite en
 développement):
 
     $ bin/django syncdb
     $ bin/django migrate
-    $ sqlite3 agendadulibre < agenda/events/sql/region.sql
-    $ sqlite3 agendadulibre < agenda/events/sql/city.sql
+    $ # Données de test de l'agenda du libre du Québec
+    $ sqlite3 agendadulibre.sqlite < agenda/events/sql/region.sql
+    $ sqlite3 agendadulibre.sqlite < agenda/events/sql/city.sql
     
 Et voilà, et pour lancer l'agenda:
 
@@ -61,14 +69,20 @@ Vous n'avez donc qu'à suivre les étapes suivantes:
     $ git clone https://github.com/vcorreze/agendaEteAccoord.git
     $ cd agendaEteAccoord
     $ python bootstrap.py
-    $ bin/buildout -c production -vvv
-    
+    $ bin/buildout -c production.cfg -vvv
+
+Paramétrez la configuration d'accès à la base de données, la 
+configuration des emails etc... :
+
+    $ cp agenda/production.py.tpl agenda/production.py
+    $ vi agenda/production.py
+
 Vous devez encore une fois initialiser la base de données:
+
+!! Attention : La base de données doit déjà être créée dans PostgreSQL.
 
     $ bin/django syncdb
     $ bin/django migrate
-    $ mysql agendadulibre < agenda/events/sql/region.sql
-    $ mysql agendadulibre < agenda/events/sql/city.sql
     
 Ensuite, nous utilisons supervisor afin de faire rouler le tout:
 
@@ -79,6 +93,5 @@ sur les processus qui roulent:
 
     $ bin/supervisorctl
     
-Vous n'avez qu'à ouvrir l'url suivante: http://127.0.0.1:8000 dans votre
+Vous n'avez qu'à ouvrir l'url suivante: http://127.0.0.1:8080 dans votre
 navigateur !
-
