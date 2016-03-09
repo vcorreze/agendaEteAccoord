@@ -24,6 +24,7 @@ from django import forms
 from agenda.events.models import Event, City, Region
 from agenda.events.widgets import SplitSelectDateTimeWidget
 from django.forms.util import ErrorList
+from django.conf import settings
 from datetime import datetime
 
 class EventForm(forms.ModelForm):
@@ -49,6 +50,12 @@ class EventForm(forms.ModelForm):
       exclude = ("submission_time", "updated_time", "decision_time",
                  "moderator", "moderated", "latitude", "longitude",
                  "banner", "spotlight", "announced", "twitter")
+
+    def __init__(self, *args, **kwargs):
+        super(EventForm, self).__init__(*args, **kwargs)
+
+        if not settings.RECAPTCHA_ENABLE:
+            del self.fields['captcha']
 
     def clean(self):
       cleaned_data = self.cleaned_data
