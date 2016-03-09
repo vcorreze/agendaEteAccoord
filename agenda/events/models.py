@@ -20,6 +20,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
+from django.conf import settings
 
 from babel.dates import format_datetime
 
@@ -142,8 +143,9 @@ Veillez à utiliser les balises &lt;p&gt; pour formater les paragraphes, et non 
      self._disable_signals = False
 
   def tweet(self):
-    tweeter = EventTweeter()
-    tweeter.tweet(self.mention)
+      if settings.TWITTER_ENABLE:
+        tweeter = EventTweeter()
+        tweeter.tweet(self.mention)
 
   @staticmethod
   def announce(sender, instance, **kwargs):
