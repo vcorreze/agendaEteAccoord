@@ -1,7 +1,6 @@
-Agendu du libre du Québec
+Agendu de l'été
 =========================
 
 This application is a web site offering a centralised calendar
-for sharing free software events.  It is based on the original
-agendadulibre.org for France.  This code is a complete reimplementation
-in Django of their PHP site.
+for sharing events.  It is based on the original
+http://agendadulibre.qc.ca. This code is an update.

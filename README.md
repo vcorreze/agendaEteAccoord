@@ -1,39 +1,30 @@
 Présentation
 ============
 
-L'Agenda du libre du Québec est une copie conforme de l'agendadulibre.org
-(France). Puisque ce dernier est disponible sous licence GPL, la mise en place
- de ce clône a été plutôt rapide. Plusieurs textes de la version québécoise
-proviennent de la version française.
+L'Agenda de l'été à l'Accoord est un fork de l'[Agenda du libre du Québec](https://github.com/mlhamel/agendadulibre) pour
+permettre de l'adapter aux besoins d'une structure socioculturelle Nantaise
+afin de publier l'ensemble de nos animations de l'été.
 
-Dans les détails, la version québécoise est une réimplémentation en Django de
-leur version en PHP. Ce changement technologique s'est avéré nécessaire dû au
-fait que la version de France n'a pas de séparation MVC, rendant difficile la
-création d'une version avec des textes différents. (Note: la version française 
-a été réfaite en Ruby en 2014.) Néanmoins, le principe de fonctionnement est 
-idéal et il a été reproduit avec minutie.
+Plusieurs textes du site proviennent des versions d'origine. Dans les détails cette
+version est une mise à jour mineure de l'agenda du libre du Québec.
+
 
 Cette version est disponible sous licence GNU Affero General Public License.
 C'est une licence qui est plus restritive que la GNU General Public License
 dû au fait qu'elle oblige les applications accessibles via le Web à rendre leur
- code source disponible. Le code source est disponible ici. Ce changement de
-licence est possible puisque L'Agenda du libre du Québec ne contient aucune
-ligne de code de l'original. Le logo est un mélange de l'icône Tango pour
-applications de calendrier et de la fleur de lys du drapeau du Québec. Les
+ code source disponible. Le code source est disponible ici. Les
 icônes proviennent également du projet Tango.
 
-L'Agendu du libre du Québec est aujourd'hui maintenu et administré par
-Mathieu Leduc-Hamel avec la collaboration, pour la modération, de
- Guillaume Prate et Fabián Rodriguez.
+L'Agendu de l'été est maintenu par l'[Accoord](https://www.accoord.fr/).
 
 Installation
 ========
 
-Pour installer l'Agenda du libre du Québec, vous n'avez qu'à suivre les différentes
+Pour installer l'Agenda de l'été, vous n'avez qu'à suivre les différentes
 étapes suivantes. (Prérequis: Python 2.7.x, git, sqlite3) :
 
-    $ git clone https://github.com/mlhamel/agendadulibre.git
-    $ cd agendadulibre
+    $ git clone https://github.com/vcorreze/agendaEteAccoord.git
+    $ cd agendaEteAccoord
     $ python bootstrap.py
     $ bin/buildout
 
@@ -67,8 +58,8 @@ version de nginx et de uwsgi qui serviront l'agenda.
 
 Vous n'avez donc qu'à suivre les étapes suivantes:
 
-    $ git clone https://github.com/mlhamel/agendadulibre.git
-    $ cd agendadulibre
+    $ git clone https://github.com/vcorreze/agendaEteAccoord.git
+    $ cd agendaEteAccoord
     $ python bootstrap.py
     $ bin/buildout -c production -vvv
     
