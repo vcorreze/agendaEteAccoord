@@ -46,7 +46,7 @@ def month_cal(year, month, region=None):
                              - timedelta(first_day_of_month.weekday()+1))
     last_day_of_calendar = (last_day_of_month
                             + timedelta(7 - last_day_of_month.weekday()))
-    print last_day_of_month.isoweekday()
+    # print last_day_of_month.isoweekday()
     today = date.today()
 
     # Filter local events for given region, include national and
