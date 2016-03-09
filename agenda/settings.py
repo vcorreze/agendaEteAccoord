@@ -1,4 +1,5 @@
-# Django settings for agenda project.
+# -*- encoding:utf-8 -*-
+#  Django settings for agenda project.
 import agenda
 import os
 
@@ -7,7 +8,7 @@ TEMPLATE_DEBUG = DEBUG
 PROJECT_ROOT = os.path.dirname(agenda.__file__)
 
 ADMINS = (
-    ('Mathieu Leduc-Hamel', 'marrakis@gmail.com'),
+    ('Vincent Corrèze', 'vincent.correze@accoord.fr'),
 )
 
 MANAGERS = ADMINS
@@ -15,7 +16,7 @@ MANAGERS = ADMINS
 DATABASES = {
     "default": {
         "ENGINE": 'django.db.backends.sqlite3',
-        "NAME": 'agendadulibre',
+        "NAME": 'agendadulibre.sqlite',
         "USER": 'agendadulibre',
         "PASSWORD": '',
         "HOST": '',
@@ -28,11 +29,11 @@ DATABASES = {
 # although not all choices may be available on all operating systems.
 # If running in a Windows environment this must be set to the same as your
 # system time zone.
-TIME_ZONE = 'America/Montreal'
+TIME_ZONE = 'Europe/Paris'
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
-LANGUAGE_CODE = 'fr-ca'
+LANGUAGE_CODE = 'fr-FR'
 
 SITE_ID = 1
 
@@ -61,6 +62,7 @@ MEDIA_URL = ''
 STATIC_URL = '/media/'
 
 # Make this unique, and don't share it with anybody.
+# !!!! MUST BE DEFINED IN production.py !!!!
 SECRET_KEY = '2oaw+105(kzy2ybr58@%1u&w_!5r6)ykg6wk9+=3+m#j*@7!n_'
 
 # twitter configuration
@@ -123,7 +125,7 @@ FORCE_SCRIPT_NAME = ''
 
 MAX_TAG_LENGTH = 255
 
-FROM_EMAIL = "info@agendadulibre.qc.ca"
+FROM_EMAIL = "vincent.correze@accoord.fr"
 ENABLE_MAIL = False
 
 LOGIN_URL = "/login"
