@@ -6,11 +6,11 @@
 {% block feeds %}
   {% if region %}
     <link rel="alternate" href="/event/feeds/latest_region/{{ region.id }}/"
-          title="{% blocktrans %}Agenda du libre du Québec, nouveaux évènements pour {{ region.name }} {% endblocktrans %}"
+          title="{% blocktrans %}L'Agenda de l'Accoord, nouveaux événements pour {{ region.name }} {% endblocktrans %}"
           type="application/rss+xml" />
     <link rel="alternate"
           href="/event/feeds/upcoming_region/{{ region.id }}/"
-          title="{% trans 'Agenda du libre du Québec, prochains évènements pour' %} {{ region.name }}"
+          title="{% trans "L'Agenda de l'Accoord, prochains événements pour" %} {{ region.name }}"
           type="application/rss+xml" />
   {% endif %}
 {% endblock %}

@@ -122,10 +122,10 @@ class ICalendarFeed(object):
 
 class UpcomingEventCalendar(ICalendarFeed):
     def name(self):
-        return u"L'Agenda du libre du Québec"
+        return u"L'Agenda de l'Accoord"
 
     def description(self):
-        return u"Tous les événements du libre du Québec"
+        return u"Tous les événements de l'Agenda de l'Accoord"
 
     def timezone(self):
         return u"America/Montreal"
@@ -139,7 +139,7 @@ class UpcomingEventCalendar(ICalendarFeed):
                 .filter(start_time__lte=end))
 
     def item_uid(self, item):
-        return str(item.id) + "@agendadulibre.qc.ca"
+        return str(item.id) + "@agenda.accoord.fr"
 
     def item_start(self, item):
         return item.start_time
@@ -148,7 +148,7 @@ class UpcomingEventCalendar(ICalendarFeed):
         return item.end_time
 
     def item_location(self, item):
-        return item.address + ", " + item.city.name + u", Québec"
+        return item.address + ", " + item.city.name
 
     def item_description(self, item):
         return remove_html_tags(item.description)
@@ -163,10 +163,10 @@ class UpcomingEventCalendarByRegion (ICalendarFeed):
         self.region = region
 
     def name(self):
-        return u"L'Agenda du libre du Québec (" + self.region.name + ")"
+        return u"L'Agenda de l'Accoord (" + self.region.name + ")"
 
     def description(self):
-        return (u"Tous les événements du libre du Québec pour la région "
+        return (u"Tous les événements de l'Accoord pour le quartier "
                 + self.region.name)
 
     def timezone(self):
@@ -187,7 +187,7 @@ class UpcomingEventCalendarByRegion (ICalendarFeed):
                 .filter(start_time__gte=start, start_time__lte=end))
 
     def item_uid(self, item):
-        return str(item.id) + "@agendadulibre.qc.ca"
+        return str(item.id) + "@agenda.accoord.fr"
 
     def item_start(self, item):
         return item.start_time
@@ -207,7 +207,7 @@ class UpcomingEventCalendarByRegion (ICalendarFeed):
 
 
 class LatestEntries(Feed):
-    title = "Agendadulibre.qc.ca nouveaux évenements"
+    title = "Agenda.accoord.fr nouveaux évenements"
     link = "/event/"
     description = "Flux à jour des derniers évènements ajoutés"
 
@@ -224,12 +224,12 @@ class LatestEntriesByRegion(LatestEntries):
     link = "/event/"
 
     def items_title(self, obj):
-        return (u"Agendadulibre.qc.ca: Nouveaux évènements pour %s (Québec)"
+        return (u"Agenda.accoord.fr: Nouveaux évènements pour %s"
                 % obj.name)
 
     def items_description(self, obj):
-        return (u"Évènements relatif aux logiciels libre récemment ajoute"
-                u" pour %s (Québec) et à plus grande portée"
+        return (u"Événements de l'association Accoord"
+                u" pour %s"
                 % obj.name)
 
     def get_object(self, request, region_id):
@@ -248,7 +248,7 @@ class LatestEntriesByRegion(LatestEntries):
 
 
 class UpcomingEntries(LatestEntries):
-    title = "Agendadulibre.qc.ca prochains évenements"
+    title = "Agenda.accoord.fr prochains évenements"
     link = "/event/"
     description = "Flux à jour des évènements à venir"
 
@@ -264,11 +264,11 @@ class UpcomingEntriesByRegion(UpcomingEntries):
     link = "/event/"
 
     def title(self, obj):
-        return (u"Agendadulibre.qc.ca: Évènements à venir pour %s (Québec)"
+        return (u"Agenda.accoord.fr: Événements à venir pour %s"
                 % obj.name)
 
     def description(self, obj):
-        return (u"Évènements relatif aux logiciels libre à venir pour %s (Québec) et à plus grande portée"  # noqa
+        return (u"Événements de l'association Accoord pour %s"  # noqa
                 % obj.name)
 
     def get_object(self, request, region_id):

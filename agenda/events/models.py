@@ -43,7 +43,7 @@ class Region (models.Model):
 
 class City (models.Model):
   class Meta:
-    verbose_name = "ville"
+    verbose_name = "équipement"
     #ordering = ['name'] Unneeded as cities are inserted in the required order
 
   name = models.CharField (max_length=200)
