@@ -18,7 +18,8 @@ agenda.egg-info/
 agendadulibre
 agenda/media/banners/
 build.log
+etc
+var
 agenda/production.py
 agenda/development.py
-etc
 agendadulibre.sqlite

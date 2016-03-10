@@ -8,7 +8,6 @@ afin de publier l'ensemble de nos animations de l'été.
 Plusieurs textes du site proviennent des versions d'origine. Dans les détails cette
 version est une mise à jour mineure de l'agenda du libre du Québec.
 
-
 Cette version est disponible sous licence GNU Affero General Public License.
 C'est une licence qui est plus restritive que la GNU General Public License
 dû au fait qu'elle oblige les applications accessibles via le Web à rendre leur
@@ -17,16 +16,23 @@ icônes proviennent également du projet Tango.
 
 L'Agendu de l'été est maintenu par l'[Accoord](https://www.accoord.fr/).
 
-Installation
-========
+Note: La procédure d'installation a été testée sous Debian 8.
+
+Installation en développement
+=============================
 
 Pour installer l'Agenda de l'été, vous n'avez qu'à suivre les différentes
 étapes suivantes. (Prérequis: Python 2.7.x, git, sqlite3) :
 
+    $ # su - root
+    $ apt-get install git sqlite3
+
+    $ # su - <user>
+    $ cd <projet-dir>
     $ git clone https://github.com/vcorreze/agendaEteAccoord.git
     $ cd agendaEteAccoord
     $ python bootstrap.py
-    $ bin/buildout -c developement.cfg -vvv
+    $ bin/buildout -c development.cfg -vvv
 
 Les dépendances seront téléchargées et installées dans le répertoire courant.
 
@@ -57,7 +63,7 @@ Installation en production
 
 Pour installer l'Agenda du libre en production, on vous conseille de ne pas 
 utiliser SQLite3 car ce n'est pas une base de données très robuste pour un 
-site web multi-usager. Nous avons donc choisit MySQL afin de faire rouler 
+site web multi-usager. Nous avons donc choisit PostgreSQL afin de faire tourner 
 l'agenda en production.
 
 Pour installer l'agenda en production il suffit de spécifier à buildout 
@@ -66,10 +72,29 @@ version de nginx et de uwsgi qui serviront l'agenda.
 
 Vous n'avez donc qu'à suivre les étapes suivantes:
 
+    $ # su - root
+    $ apt-get install make gcc python-dev build-essential zlib1g-dev libpcre3 libpcre3-dev libbz2-dev libssl-dev tar unzip
+    $ apt-get install libpq-dev postgresql postgresql-server-dev-9.4 postgresql-client 
+    $ adduser agendadulibre
+
+    $ # su - user
     $ git clone https://github.com/vcorreze/agendaEteAccoord.git
     $ cd agendaEteAccoord
     $ python bootstrap.py
     $ bin/buildout -c production.cfg -vvv
+
+Création de la base de données PostgreSQL:
+
+    $ # su - postgres
+    $ psql
+    $ postgres=# CREATE USER agendadulibre WITH PASSWORD 'agendadulibre';
+    $ postgres=# CREATE DATABASE agendadulibre OWNER agendadulibre;
+    $ postgres=# \q
+
+Tester la connexion à la base de données:
+
+    $ su - agendadulibre
+    $ psql agendadulibre
 
 Paramétrez la configuration d'accès à la base de données, la 
 configuration des emails etc... :
@@ -84,14 +109,26 @@ Vous devez encore une fois initialiser la base de données:
     $ bin/django syncdb
     $ bin/django migrate
     
-Ensuite, nous utilisons supervisor afin de faire rouler le tout:
+Pour lancer les services (nginx, uwsgi/django):
 
     $ bin/supervisord
     
 Vous pouvez toujours vous connecter à supervisor afin d'avoir plus de détails
-sur les processus qui roulent:
+et intéragir sur les processus, exemples:
 
     $ bin/supervisorctl
-    
+    supervisor> status
+    nginx  RUNNING  ...
+    uwsgi  RUNNING  ...
+    supervisor> restart nginx
+    nginx: stopped
+    nginx: started
+    supervisor> stop nginx
+    nginx: stopped
+    supervisor> start nginx
+    nginx: started
+    supervisor> help
+    ...
+
 Vous n'avez qu'à ouvrir l'url suivante: http://127.0.0.1:8080 dans votre
 navigateur !

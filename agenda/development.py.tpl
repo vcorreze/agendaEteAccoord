@@ -16,6 +16,11 @@ EMAIL_PORT = 25
 EMAIL_HOST_USER = ''
 EMAIL_HOST_PASSWORD = ''
 EMAIL_USE_TLS = False
+# EMAIL BACKEND FOR TESTS - https://docs.djangoproject.com/en/dev/topics/email/
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+#EMAIL_BACKEND = 'django.core.mail.backends.dummy.EmailBackend'
+#EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
+#EMAIL_FILE_PATH = '/tmp/app-messages'  # change this to a proper location
 
 # DATABASE CONFIGURATION
 DATABASES = {
