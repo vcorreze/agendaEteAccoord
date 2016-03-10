@@ -63,14 +63,14 @@
 </tr>
 <tr class="odd">
   <td class="item">Toutes les régions</td>
-  <td><a href="webcal://www.agendadulibre.qc.ca/event/calendar/">Webcal</a></td>
-  <td><a href="http://www.google.com/calendar/render?cid=http://www.agendadulibre.qc.ca/event/calendar/">Google Calendar</a></td>
+  <td><a href="webcal://agenda.accoord.fr/event/calendar/">Webcal</a></td>
+  <td><a href="http://www.google.com/calendar/render?cid=http://agenda.accoord.fr/event/calendar/">Google Calendar</a></td>
 </tr>
 {% for region in region_list %}
 <tr class="{% cycle "even" "odd" %}">
   <td class="item">{{ region.name }}</td>
-  <td><a href="webcal://www.agendadulibre.qc.ca/event/calendar_region/{{ region.id }}/">Webcal</a></td>
-  <td>  <a href="http://www.google.com/calendar/render?cid=http://www.agendadulibre.qc.ca/event/calendar_region/{{ region.id }}/">Google Calendar</a></td>
+  <td><a href="webcal://agenda.accoord.fr/event/calendar_region/{{ region.id }}/">Webcal</a></td>
+  <td>  <a href="http://www.google.com/calendar/render?cid=http://agenda.accoord.fr/event/calendar_region/{{ region.id }}/">Google Calendar</a></td>
 </tr>
 {% endfor %}
 </table>

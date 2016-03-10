@@ -23,7 +23,7 @@ next_date += datetime.timedelta (days = add)
 print "Soumettre un événement pour le ", next_date, "?"
 raw_input("Appuyez sur Entrée pour poursuivre...")
 
-url = 'http://www.agendadulibre.qc.ca/event/new/'
+url = 'http://agenda.accoord.fr/event/new/'
 
 # Build HTML Form values
 values = {

@@ -175,10 +175,10 @@ Veillez à utiliser les balises &lt;p&gt; pour formater les paragraphes, et non 
       instance.save_without_signals()
 
   def get_full_admin_url(self):
-    return "http://www.agendadulibre.qc.ca/admin/events/event/%d/" % self.id
+    return "http://agenda.accoord.fr/admin/events/event/%d/" % self.id
 
   def get_full_url(self):
-    return "http://agendadulibre.qc.ca%s" % self.get_absolute_url()
+    return "http://agenda.accoord.fr%s" % self.get_absolute_url()
 
   def get_absolute_url (self):
     return "/event/%i/" % self.id
