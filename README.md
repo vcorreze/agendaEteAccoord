@@ -59,12 +59,12 @@ Vous n'avez qu'à ouvrir l'url suivante: http://127.0.0.1:8000 dans votre
 navigateur !
 
 Installation en production
-===================
+==========================
 
 Pour installer l'Agenda du libre en production, on vous conseille de ne pas 
 utiliser SQLite3 car ce n'est pas une base de données très robuste pour un 
 site web multi-usager. Nous avons donc choisit PostgreSQL afin de faire tourner 
-l'agenda en production.
+l'agenda en production (cf. https://wiki.debian.org/PostgreSql).
 
 Pour installer l'agenda en production il suffit de spécifier à buildout 
 d'utiliser la configuration de production. Le tout compilera localement une
@@ -75,6 +75,9 @@ Vous n'avez donc qu'à suivre les étapes suivantes:
     $ # su - root
     $ apt-get install make gcc python-dev build-essential zlib1g-dev libpcre3 libpcre3-dev libbz2-dev libssl-dev tar unzip
     $ apt-get install libpq-dev postgresql postgresql-server-dev-9.4 postgresql-client 
+    $ # Si vous souhaitez envoyer des emails depuis le serveur - https://wiki.debian.org/Postfix
+    $ apt-get install postfix
+    
     $ adduser agendadulibre
 
     $ # su - user
