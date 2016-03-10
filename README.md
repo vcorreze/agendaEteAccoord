@@ -18,8 +18,8 @@ L'Agendu de l'été est maintenu par l'[Accoord](https://www.accoord.fr/).
 
 Note: La procédure d'installation a été testée sous Debian 8.
 
-Installation en développement
-=============================
+Développement : installation du projet
+======================================
 
 Pour installer l'Agenda de l'été, vous n'avez qu'à suivre les différentes
 étapes suivantes. (Prérequis: Python 2.7.x, git, sqlite3) :
@@ -58,8 +58,8 @@ Et voilà, et pour lancer l'agenda:
 Vous n'avez qu'à ouvrir l'url suivante: http://127.0.0.1:8000 dans votre
 navigateur !
 
-Installation en production
-==========================
+Production : installation du projet
+===================================
 
 Pour installer l'Agenda du libre en production, on vous conseille de ne pas 
 utiliser SQLite3 car ce n'est pas une base de données très robuste pour un 
@@ -135,3 +135,45 @@ et intéragir sur les processus, exemples:
 
 Vous n'avez qu'à ouvrir l'url suivante: http://127.0.0.1:8080 dans votre
 navigateur !
+
+Production : nginx
+==================
+
+Écouter sur le port 80
+----------------------
+
+nginx est configuré pour écouter sur le port 8080. Si vous souhaitez qu'il 
+écoute sur le port 80 il faut :
+
+- Modifier le port dans la partie [nginx-conf] du fichier de configuration
+  production.cfg et refaire tourner le buildout.
+
+- Permettre à nginx de se binder sur les ports "low ports' avec la commande 
+  suivante exécutée en root: setcap 'cap_net_bind_service=+ep' /home/agendadulibre/agendaEteAccoord/parts/nginx/sbin/nginx
+
+- Relancer les services avec supervisorctl
+
+- Ouvrir son navigateur à l'url suivante: http://127.0.0.1
+
+Et pour tester localement avec le bon nom de domaine :
+
+    $ # su - root
+    $ vi /etc/hosts
+
+et ajoutez la ligne suivante :
+
+    127.0.0.1       agenda.accoord.fr
+
+L'application est alors disponible à l'adresse http://agenda.accoord.fr
+
+Le fichier de configuration
+---------------------------
+
+Il est auto-généré par le buildout à partir du template agendaEteAccoord/conf/nginx.conf.ini
+et se trouve ici : /home/agendadulibre/agendaEteAccoord/etc/nginx/nginx.conf
+
+
+
+
+
+
