@@ -3,7 +3,7 @@
 {% load i18n %}
 
 {% block content %}
-<h2>{% trans "Liste des évènements" %}</h2>
+<h2>{% trans "Liste des événements" %}</h2>
 <ul>
   {% for event in event_list %}
   <li><a href="{{ event.id }}">{{ event.title }}</a></li>

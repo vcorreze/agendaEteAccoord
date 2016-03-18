@@ -66,7 +66,7 @@ class EventForm(forms.ModelForm):
         return cleaned_data
 
       if start_time >= end_time:
-        msg = u"L'évènement ne peut se terminer avant son début"
+        msg = u"L'événement ne peut se terminer avant son début"
         self._errors["start_time"] = ErrorList([msg])
         self._errors["end_time"] = ErrorList([msg])
 
@@ -74,7 +74,7 @@ class EventForm(forms.ModelForm):
         del cleaned_data["end_time"]
 
       elif start_time < datetime.today():
-        msg = u"Seul les évènements à venir sont acceptés"
+        msg = u"Seul les événements à venir sont acceptés"
         self._errors["start_time"] = ErrorList([msg])
 
         del cleaned_data["start_time"]

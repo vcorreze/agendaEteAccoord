@@ -209,7 +209,7 @@ class UpcomingEventCalendarByRegion (ICalendarFeed):
 class LatestEntries(Feed):
     title = "Agenda.accoord.fr nouveaux évenements"
     link = "/event/"
-    description = "Flux à jour des derniers évènements ajoutés"
+    description = "Flux à jour des derniers événements ajoutés"
 
     def items(self):
         return (Event.objects
@@ -224,7 +224,7 @@ class LatestEntriesByRegion(LatestEntries):
     link = "/event/"
 
     def items_title(self, obj):
-        return (u"Agenda.accoord.fr: Nouveaux évènements pour %s"
+        return (u"Agenda.accoord.fr: Nouveaux événements pour %s"
                 % obj.name)
 
     def items_description(self, obj):
@@ -248,9 +248,9 @@ class LatestEntriesByRegion(LatestEntries):
 
 
 class UpcomingEntries(LatestEntries):
-    title = "Agenda.accoord.fr prochains évenements"
+    title = "Agenda.accoord.fr prochains événements"
     link = "/event/"
-    description = "Flux à jour des évènements à venir"
+    description = "Flux à jour des événements à venir"
 
     def items(self):
         today = date.today()

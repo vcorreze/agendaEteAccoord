@@ -93,9 +93,9 @@ Veillez à utiliser les balises &lt;p&gt; pour formater les paragraphes, et non 
 
   address = models.CharField(max_length=200, blank=True, null=True,
                              verbose_name="Adresse",
-                             help_text="Numéro de porte et nom de rue de l'endroit, et le local")
+                             help_text="Adresse complète")
 
-  city = models.ForeignKey(City, blank=True, null=True, verbose_name="Ville")
+  city = models.ForeignKey(City, blank=True, null=True, verbose_name="Équipement")
   latitude = models.FloatField(blank=True, null=True, default=0)
   longitude = models.FloatField(blank=True, null=True, default=0)
 
