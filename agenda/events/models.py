@@ -37,6 +37,11 @@ from agenda.lib.bbox import boundingBox
 class Region (models.Model):
   id = models.PositiveSmallIntegerField(primary_key=True)
   name = models.CharField (max_length=200)
+  moderator = models.ForeignKey(
+      User, blank=True, null=True,
+      related_name="moderated_regions"
+  )
+
 
   def __unicode__ (self):
     return self.name
