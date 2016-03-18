@@ -1,14 +1,8 @@
 Bonjour,
 
-Le nouvel évènement {{ event.title }}
-a été soumis.  Pour le réviser, veuillez visiter
+Le nouvel événement {{ event.title }} a été soumis.
 
-{{ event.get_full_admin_url }}
-
-Pour le modérer positivement veuillez cliquer sur le lien
-suivant:
-
-http://agenda.accoord.fr/{% url 'moderate' event.id %}
+Lien direct vers l'événement (merci de vous connecter à l'agenda au préalable) : http://agenda.accoord.fr{% url 'event_detail' event.id %}
 
 Merci,
 

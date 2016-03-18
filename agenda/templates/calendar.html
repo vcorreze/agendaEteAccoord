@@ -14,11 +14,10 @@
           {% for event in day.events %}
             <li><a href="/event/{{ event.id }}/">{{ event.title }}</a>
             {% if not region %}
-            <br/><span class="region">{{ event.city }}</span>
-            {% else %}
-                {% ifnotequal region.name event.city.region.name %}
+                <br/><span class="region">{{ event.city.region }}</span>
+            {% endif %}
+            {% if not city %}
                 <br/><span class="region">{{ event.city }}</span>
-                {% endifnotequal %}
             {% endif %}
             </li>
           {% endfor %}

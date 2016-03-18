@@ -65,12 +65,18 @@ urlpatterns = patterns(
     url(r"^new/$", "agenda.events.views.propose", name="propose"),
     url(r"^help/$", "agenda.events.views.help", name="help"),
     url(r"^new/thanks/$", ThanksView.as_view()),
-    url(r"^(?P<pk>\d+)/$", EventDetail.as_view()),
+    url(r"^(?P<pk>\d+)/$", EventDetail.as_view(), name="event_detail"),
 
+    url(r"^(?P<event_id>\d+)/edit", "agenda.events.views.edit",
+        name="edit"),
     url(r"^(?P<event_id>\d+)/moderate$", "agenda.events.views.moderate",
         name="moderate"),
     url(r"^(?P<event_id>\d+)/unmoderate$", "agenda.events.views.unmoderate",
         name="unmoderate"),
+    url(r"^(?P<event_id>\d+)/delete_confirm", "agenda.events.views.delete_confirm",
+        name="delete_confirm"),
+
+    url(r"^moderate_my_events/$", "agenda.events.views.moderate_my_events", name="moderate_my_events"),
 
     url(r"^(?P<year>\d+)/(?P<month>\d+)/$", "agenda.events.views.month",
         name="month_view"),

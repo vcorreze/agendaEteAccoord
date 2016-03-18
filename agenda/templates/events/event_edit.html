@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+
+{% block before_end_body %}
+  <script  type="text/javascript" src="/media/tiny_mce/tiny_mce.js"></script>
+  <script  type="text/javascript" src="/media/js/event_new.js"></script>
+{% endblock %}
+
+{% block content %}
+  <h2>{% trans "Modifier un événement" %}</h2>
+  <p>
+    {% blocktrans %}
+      Cette page permet de modifier un événement dans l'Agenda de l'Accoord.
+      Les modifications apparaîtront automatiquement dans l'Agenda si
+      l'événement a déjà été modéré positivement.
+    {% endblocktrans %}
+  </p>
+  <p>
+    {% blocktrans %}
+      Pour plus d'informations et quelques conseils pour avoir une publication de meilleurs
+      qualité, veuillez consulter quelques <a href="/event/help">conseils</a>.
+    {% endblocktrans %}
+  </p>
+
+<h3>{% trans "Informations sur l'événement" %}</h3>
+
+<form method="POST">
+  <table class="form">
+    {% for field in form %}
+      <tr>
+        <th>{{ field.label_tag }}</th>
+        <td>{{ field }}</td>
+        <td class="help">{{ field.errors }}{% autoescape off %}{{ field.help_text }}{% endautoescape %}</td>
+      </tr>
+    {% endfor %}
+    <tr>
+      <th></th>
+      <td>
+        <input type="submit" value="Envoyer" />
+        <a href="{% url 'event_detail' event.id %}" title="Annuler">Annuler et retourner à l'événément</a>
+      </td>
+      <td></td>
+    </tr>
+  </table>
+</form>
+{% endblock %}

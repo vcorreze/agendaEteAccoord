@@ -16,21 +16,42 @@
 {% endblock %}
 
 {% block content %}
-  <h2 class="calendar">
-    <a href="{% url 'month_view' previous_month.year previous_month.month %}?region={{ region.id }}"
-       title="{% trans 'Aller au mois de' %} {{ previous_month|date:"F Y" }}"><img id="arrow" src="/media/img/go-previous.png"></a>
-    {{ month|date:"F Y" }}
-    <a href="{% url 'month_view' next_month.year next_month.month %}?region={{ region.id }}"
-       title="{% trans 'Aller au mois de' %} {{ next_month|date:"F Y" }}">
-       <img id="arrow" src="/media/img/go-next.png">
-    </a>
-  </h2>
-  <form id="filter">
-    {% for field in form %}
-      {{ field.label }}
-      {{ field }}
-    {% endfor %}
-    <noscript><input type="submit" value="{% trans 'Appliquer' %}" /></noscript>
-  </form>
-  {% month_cal month.year month.month region %}
+
+  {% if region %}
+
+    <h2 class="calendar">
+      <a href="{% url 'month_view' previous_month.year previous_month.month %}?region={{ region.id }}&city={{ city.id }}"
+         title="{% trans 'Aller au mois de' %} {{ previous_month|date:"F Y" }}"><img id="arrow" src="/media/img/go-previous.png"></a>
+      {{ month|date:"F Y" }}
+      <a href="{% url 'month_view' next_month.year next_month.month %}?region={{ region.id }}&city={{ city.id }}"
+         title="{% trans 'Aller au mois de' %} {{ next_month|date:"F Y" }}">
+         <img id="arrow" src="/media/img/go-next.png">
+      </a>
+    </h2>
+    <form id="filter">
+      <strong>Quartier {{ region }} : </strong>
+      {% comment %}{{ field.label }}{% endcomment %}
+      {{ form.city }}
+      {{ form.region }}
+      <noscript><input type="submit" value="{% trans 'Appliquer' %}" /></noscript>
+    </form>
+
+    {% month_cal month.year month.month region city %}
+
+  {% else %}
+
+    <div style="width: 100%; text-align: center">
+    <div style="margin: 0 auto; width:50%">
+      <h2 class="calendar">Merci de sélectionner une région :</h2>
+      <ul style="list-style-type: none">
+        {% for r in regions %}
+          <li><a href="{{ request.build_absolute_uri }}?region={{ r.pk }}" title="{{ r }}">{{ r }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+    </div>
+
+  {% endif %}
+
+
 {% endblock %}

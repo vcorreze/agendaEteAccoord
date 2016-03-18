@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+
+{% block content %}
+
+<h2>{% trans "Mes événements à modérer" %}</h2>
+
+{% for quartier, equipments in events_struct.items %}
+
+  <h3>{{ quartier }}</h3>
+
+  {% for equipment, events in equipments.items %}
+
+    <h4>{{ equipment }}</h4>
+
+    <ul>
+      {% for event in events %}
+        <li><a href="{% url 'event_detail' event.pk %}" title="Modérer l'événément">{{ event }}</a></li>
+      {% endfor %}
+    </ul>
+
+  {% endfor %}
+
+{% empty %}
+
+Il n'y a aucun évémement à modérer.
+
+{% endfor %}
+
+{% endblock %}

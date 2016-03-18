@@ -18,9 +18,12 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
+from collections import OrderedDict
 from datetime import date, timedelta
+
 from django.shortcuts import render_to_response, HttpResponseRedirect
 from django.core.urlresolvers import reverse
+from django.core.exceptions import PermissionDenied
 
 from django.template.response import TemplateResponse
 from django.template.loader import render_to_string
@@ -28,7 +31,7 @@ from django.template.loader import render_to_string
 from django.http import HttpResponseNotFound
 
 from agenda.events.forms import EventForm, RegionFilterForm
-from agenda.events.models import Region, Event
+from agenda.events.models import Region, City, Event
 from agenda.events.feeds import UpcomingEventCalendarByRegion
 from agenda.events.utils import mail_moderators
 
@@ -39,22 +42,68 @@ from django.conf import settings
 
 
 def propose(request, template_name="events/event_new.html"):
-    form = EventForm(request)
     if request.method == "POST":
         form = EventForm(request.POST)
         if form.is_valid():
             e = form.save()
-            if settings.ENABLE_MAIL:
+            moderator = e.city.region.moderator
+            if settings.ENABLE_MAIL and moderator is not None:
                 msg = render_to_string("events/mail.html", {
                     "event": e
                 })
-                mail_moderators(u"Nouvel évènement en attente de modération",
-                                msg)
+                moderators = [moderator]
+                mail_moderators(u"Nouvel événement en attente de modération",
+                                msg, moderators)
             return HttpResponseRedirect("/event/new/thanks/")
     else:
         form = EventForm()
     return TemplateResponse(request, template_name, {
         "form": form,
+    })
+
+
+@login_required
+def edit(request, event_id, template_name="events/event_edit.html"):
+    try:
+        event = Event.objects.get(pk=event_id)
+    except Region.DoesNotExist:
+        return HttpResponseNotFound()
+
+    # action reserved to the region's moderator
+    if event.city.region.moderator != request.user:
+        raise PermissionDenied()
+
+    if request.method == "POST":
+        form = EventForm(request.POST, instance=event)
+        if form.is_valid():
+            e = form.save()
+            return HttpResponseRedirect(reverse("event_detail", args=[event_id]))
+    else:
+        form = EventForm(instance=event)
+    return TemplateResponse(request, template_name, {
+        "form": form,
+        "event": event
+    })
+
+
+@login_required
+def delete_confirm(request, event_id, template_name="events/event_delete_confirm.html"):
+    try:
+        event = Event.objects.get(pk=event_id)
+    except Region.DoesNotExist:
+        return HttpResponseNotFound()
+
+    # action reserved to the region's moderator
+    if event.city.region.moderator != request.user:
+        raise PermissionDenied()
+
+    if request.method == "POST":
+        # delete event
+        event.delete()
+        return HttpResponseRedirect(reverse("index"))
+
+    return TemplateResponse(request, template_name, {
+        'event': event
     })
 
 
@@ -100,28 +149,38 @@ def help(request, template_name="events/help.html"):
     return TemplateResponse(request, template_name)
 
 
-#login_required
+@login_required
 def moderate(request, event_id):
     try:
         event = Event.objects.get(pk=event_id)
     except Region.DoesNotExist:
         return HttpResponseNotFound()
+
+    # action reserved to the region's moderator
+    if event.city.region.moderator != request.user:
+        raise PermissionDenied()
+
     event.moderated = True
     event.moderator = request.user
     event.save()
-    return HttpResponseRedirect(reverse("index"))
+    return HttpResponseRedirect(reverse("event_detail", args=[event_id]))
 
 
-#login_required
+@login_required
 def unmoderate(request, event_id):
     try:
         event = Event.objects.get(pk=event_id)
     except Region.DoesNotExist:
         return HttpResponseNotFound()
+
+    # action reserved to the region's moderator
+    if event.city.region.moderator != request.user:
+        raise PermissionDenied()
+
     event.moderated = False
     event.moderator = request.user
     event.save()
-    return HttpResponseRedirect(reverse("index"))
+    return HttpResponseRedirect(reverse("event_detail", args=[event_id]))
 
 
 def calendar_region(request, region_id):
@@ -142,10 +201,14 @@ def month(request, year, month,
     form = RegionFilterForm(request)
 
     region = None
+    city = None
     if request.method == "GET":
         form = RegionFilterForm(request.GET)
         if form.is_valid():
             region = form.cleaned_data["region"]
+            city = form.cleaned_data["city"]
+            # limit city to the selection region
+            form.fields['city'].queryset = City.objects.filter(region=region).all()
     else:
         form = RegionFilterForm()
 
@@ -155,4 +218,44 @@ def month(request, year, month,
         "next_month": next,
         "form": form,
         "region": region,
+        "city": city,
+        "regions": Region.objects.all()
+    })
+
+@login_required
+def moderate_my_events(request):
+    """ List all my events I have to moderate """
+    events = Event.objects.filter(
+        moderated=False,
+        city__region__moderator=request.user
+    ).select_related('city__region'
+    ).order_by('city__region', 'city')
+
+    # Group our events by region then by city, using OrderedDict structures
+    # { region_obj1: { eq_obj1: [event1, event2, ...],
+    #                 ...
+    #                },
+    #   ...
+    # }
+    result = OrderedDict()
+
+    for event in events:
+
+        # New region ? (quartier)
+        region = event.city.region
+        if region not in result:
+            result[region] = OrderedDict()  # equipments
+        r_region = result[region]
+
+        # New city ? (équipement)
+        equipment = event.city
+        if equipment not in r_region:
+            r_region[equipment] = []  # events
+        r_equipment = r_region[equipment]
+
+        # Add our event
+        r_equipment.append(event)
+
+    return TemplateResponse(request, 'events/moderate_my_events.html', {
+        'events_struct': result
     })

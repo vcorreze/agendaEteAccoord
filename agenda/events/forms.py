@@ -27,6 +27,12 @@ from django.forms.util import ErrorList
 from django.conf import settings
 from datetime import datetime
 
+
+class EventCityChoiceField(forms.ModelChoiceField):
+    def label_from_instance(self, obj):
+        return u'{} / {}'.format(unicode(obj.region), unicode(obj))
+
+
 class EventForm(forms.ModelForm):
     year = datetime.today().year
     years = [year,
@@ -41,7 +47,11 @@ class EventForm(forms.ModelForm):
         widget=SplitSelectDateTimeWidget(hour_step=1, \
         minute_step=15, second_step=30, twelve_hr=False, years=years))
 
-    city = forms.ModelChoiceField(City.objects.all(), empty_label=None, label="Ville")
+    city = EventCityChoiceField(
+        City.objects.all().order_by('region__name', 'name'),
+        empty_label=None,
+        label="Équipement"
+    )
 
     captcha = ReCaptchaField(attrs={'theme' : 'clean'})
 
@@ -81,6 +91,26 @@ class EventForm(forms.ModelForm):
 
       return cleaned_data
 
-class RegionFilterForm (forms.Form):
-    region = forms.ModelChoiceField(Region.objects.all(), empty_label="Toutes les régions", required=False, label="Région",
-        widget=forms.Select(attrs={"onchange":"document.getElementById('filter').submit();"}))
+
+class RegionFilterForm(forms.Form):
+
+    region = forms.ModelChoiceField(
+        Region.objects.all(),
+        empty_label=u"Tous les quartiers",
+        required=False,
+        label=u"Quartier",
+        widget=forms.Select(
+            attrs={
+                #"onchange":"document.getElementById('filter').submit();"
+                "style": "visibility: hidden"
+            }
+        )
+    )
+
+    city = forms.ModelChoiceField(
+        queryset=City.objects.all(),
+        empty_label=u"Tous les équipements",
+        required=False,
+        label=u"Équipements",
+        widget=forms.Select(attrs={"onchange":"document.getElementById('filter').submit();"})
+    )

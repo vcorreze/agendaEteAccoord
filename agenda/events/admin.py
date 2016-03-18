@@ -44,15 +44,24 @@ def make_unpublished(self, request, queryset):
 make_unpublished.short_description = u"Non publier les événements choisis"
 
 class EventAdmin(admin.ModelAdmin):
+
+    def get_region(self, obj):
+        return obj.city.region
+    get_region.short_description = 'Quartier'
+    get_region.admin_order_field = 'city__region'
+
     date_hierarchy = 'start_time'
     list_filter = ('moderated',)
+    list_display = ('title', 'start_time', 'city', 'get_region', 'moderated', )
     actions = [make_published,make_unpublished]
 
 class CityAdmin(admin.ModelAdmin):
     list_filter = ('region',)
     list_display = ('name','region')
-    pass
+
+class RegionAdmin(admin.ModelAdmin):
+    list_display = ('name','moderator')
 
 admin.site.register(Event, EventAdmin)
-admin.site.register(Region)
+admin.site.register(Region, RegionAdmin)
 admin.site.register(City, CityAdmin)

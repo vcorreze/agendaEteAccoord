@@ -28,9 +28,10 @@ def mail_submitter(event):
     pass
 
 
-def mail_moderators(title, message):
-    moderators = User.objects.filter(is_staff=True).filter(is_active=True)
-    to_emails = [x.get('email') for x in moderators.values('email')]
+def mail_moderators(title, message, moderators):
+    #moderators = User.objects.filter(is_staff=True).filter(is_active=True)
+    #to_emails = [x.get('email') for x in moderators.values('email')]
+    to_emails = [m.email for m in moderators]
     from_email = settings.FROM_EMAIL
 
     if title and message and from_email:

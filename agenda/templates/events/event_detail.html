@@ -10,8 +10,7 @@
 
 {% block content %}
   <h2><a href="{{ event.url }}">{{ event.title }}</a></h2>
-  <b class="date">{{ event.start_time|event_time:event.end_time }}</b><br/>
-  {% if user.is_authenticated %}
+  {% if user.is_authenticated and user == event.city.region.moderator %}
     <h3>
       {% if event.moderated %}
         <a href="{% url 'unmoderate' event.id %}"><img src="/media/img/delete.png" /></a>
@@ -20,8 +19,13 @@
         <a href="{% url 'moderate' event.id %}"><img src="/media/img/apply.png" /></a>
         <a href="{% url 'moderate' event.id %}">{% trans "Modérer" %}</a>
       {% endif %}
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <a href="{% url 'edit' event.id %}">{% trans "Modifier" %}</a>
+      -
+      <a href="{% url 'delete_confirm' event.id %}">{% trans "Supprimer" %}</a>
     </h3>
   {% endif %}
+  <b class="date">{{ event.start_time|event_time:event.end_time }}</b><br/>
   <br/>
   {% if event.latitude and event.longitude %}
     <iframe width="425" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"

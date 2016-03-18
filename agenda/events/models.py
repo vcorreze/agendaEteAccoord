@@ -35,6 +35,11 @@ from agenda.lib.bbox import boundingBox
 
 
 class Region (models.Model):
+
+  class Meta:
+    verbose_name = "Quartier"
+    ordering = ['name']
+
   id = models.PositiveSmallIntegerField(primary_key=True)
   name = models.CharField (max_length=200)
   moderator = models.ForeignKey(
@@ -47,12 +52,13 @@ class Region (models.Model):
     return self.name
 
 class City (models.Model):
+
   class Meta:
-    verbose_name = "équipement"
-    #ordering = ['name'] Unneeded as cities are inserted in the required order
+    verbose_name = "Équipement"
+    ordering = ['name']
 
   name = models.CharField (max_length=200)
-  region = models.ForeignKey(Region)
+  region = models.ForeignKey(Region, verbose_name='Quartier')
   latitude = models.FloatField ()
   longitude = models.FloatField ()
   address = models.CharField(max_length=200, blank=True, null=True,

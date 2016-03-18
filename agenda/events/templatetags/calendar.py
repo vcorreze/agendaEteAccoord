@@ -38,7 +38,7 @@ def get_last_day_of_month(year, month):
     return date(year, month, 1) - timedelta(1)
 
 
-def month_cal(year, month, region=None):
+def month_cal(year, month, region=None, city=None):
 
     first_day_of_month = date(year, month, 1)
     last_day_of_month = get_last_day_of_month(year, month)
@@ -49,10 +49,13 @@ def month_cal(year, month, region=None):
     # print last_day_of_month.isoweekday()
     today = date.today()
 
-    # Filter local events for given region, include national and
+    # Filter local events for given region/city, include national and
     # international events
     if region is not None:
-        q = Q(city__region=region)
+        if city is not None:
+            q = Q(city__region=region, city=city)
+        else:
+            q = Q(city__region=region)
     else:
         q = Q()
 
