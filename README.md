@@ -42,7 +42,7 @@ configuration des emails etc... :
     $ cp agenda/development.py.tpl agenda/development.py
     $ vi agenda/development.py
     
-Ensuite vous n'avez qui initialiser la base de données (SQLite en
+Ensuite vous n'avez qu'à initialiser la base de données (SQLite en
 développement):
 
     $ bin/django syncdb
@@ -50,7 +50,14 @@ développement):
     $ # Données de test de l'agenda du libre du Québec
     $ sqlite3 agendadulibre.sqlite < agenda/events/sql/region.sql
     $ sqlite3 agendadulibre.sqlite < agenda/events/sql/city.sql
-    
+
+Et importer les données relatives aux équipements (le fichier attendu 
+en entrée doit être au format CSV et contenir une première ligne 
+d'entêtes avec les noms suivants : 'Nom', 'Adresse', 'Adresse Alt.', 
+'CP', 'Ville', 'Lat', 'Long', 'Grand Quartier') :
+
+    $ bin/django import_equipements /where/you/want/ListeEquipements.csv
+
 Et voilà, et pour lancer l'agenda:
 
     $ bin/django runserver
@@ -111,7 +118,14 @@ Vous devez encore une fois initialiser la base de données:
 
     $ bin/django syncdb
     $ bin/django migrate
-    
+
+Et importer les données relatives aux équipements (le fichier attendu 
+en entrée doit être au format CSV et contenir une première ligne 
+d'entêtes avec les noms suivants : 'Nom', 'Adresse', 'Adresse Alt.', 
+'CP', 'Ville', 'Lat', 'Long', 'Grand Quartier') :
+
+    $ bin/django import_equipements /where/you/want/ListeEquipements.csv
+
 Pour lancer les services (nginx, uwsgi/django):
 
     $ bin/supervisord

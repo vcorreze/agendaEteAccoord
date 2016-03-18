@@ -55,6 +55,9 @@ class City (models.Model):
   region = models.ForeignKey(Region)
   latitude = models.FloatField ()
   longitude = models.FloatField ()
+  address = models.CharField(max_length=200, blank=True, null=True,
+                             verbose_name="Adresse",
+                             help_text="Adresse complète")
 
   def __unicode__ (self):
     return self.name
