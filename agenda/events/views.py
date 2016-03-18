@@ -41,6 +41,7 @@ from django.db.models import Count
 from django.conf import settings
 
 
+@login_required
 def propose(request, template_name="events/event_new.html"):
     if request.method == "POST":
         form = EventForm(request.POST)

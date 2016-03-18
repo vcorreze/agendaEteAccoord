@@ -39,14 +39,13 @@
           </a>
           <a href="/event/feeds/">{% trans "Fils RSS et iCal" %}</a>
         </div>
-        <div class="action">
-          <a href="/event/new/">
-            <img src="/media/img/appointment-new.png" />
-          </a>
-          <a href="/event/new/">{% trans "Proposer un événement" %}</a>
-        </div>
-        {% endblock %}
         {% if user.is_authenticated %}
+          <div class="action">
+            <a href="/event/new/">
+              <img src="/media/img/appointment-new.png" />
+            </a>
+            <a href="/event/new/">{% trans "Proposer un événement" %}</a>
+          </div>
           <div class="action">
             <a href="{% url 'moderate_my_events' %}">
             <img src="/media/img/appointment-new.png" />
@@ -60,6 +59,7 @@
             <a href="/logout/">{% trans "Déconnexion" %}</a>
           </div>
         {% endif %}
+        {% endblock %}
         {% comment %}
           <div class="language-selector action" style="margin-top: 4px; margin-left: 20px;">
             <form action="/i18n/setlang/" method="post">{% csrf_token %}
@@ -93,10 +93,10 @@
         <a href="{% url 'about' %}">
           {% trans "À propos" %}
         </a> -
-        <a href="{% url 'propose' %}">
-          {% trans "Proposer un événement" %}
-        </a> -
         {% if user.is_authenticated %}
+          <a href="{% url 'propose' %}">
+            {% trans "Proposer un événement" %}
+          </a> -
           <a href="{% url 'moderate_my_events' %}">
             {% trans "Modération" %}
           </a> -
