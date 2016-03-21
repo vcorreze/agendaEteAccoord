@@ -47,9 +47,6 @@ développement):
 
     $ bin/django syncdb
     $ bin/django migrate
-    $ # Données de test de l'agenda du libre du Québec
-    $ sqlite3 agendadulibre.sqlite < agenda/events/sql/region.sql
-    $ sqlite3 agendadulibre.sqlite < agenda/events/sql/city.sql
 
 Et importer les données relatives aux équipements (le fichier attendu 
 en entrée doit être au format CSV et contenir une première ligne 
