@@ -42,6 +42,14 @@
 
     {% month_cal month.year month.month region city %}
 
+    <p style="text-align: center">
+      <strong>Choisir un autre grand quartier : </strong>
+      {% for r in regions %}
+        <a href="?region={{ r.pk }}" title="{{ r }}">{{ r }}</a></strong>
+        {% if not forloop.last %} - {% endif %}
+      {% endfor %}
+    </p>
+
   {% else %}
 
     <div style="width: 100%; text-align: center">
