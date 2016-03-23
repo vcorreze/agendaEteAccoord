@@ -57,7 +57,7 @@ d'entêtes avec les noms suivants : 'Nom', 'Adresse', 'Adresse Alt.',
 
 Et voilà, et pour lancer l'agenda:
 
-    $ bin/django runserver
+    $ bin/django runserver 127.0.0.1:8000
 
 Vous n'avez qu'à ouvrir l'url suivante: http://127.0.0.1:8000 dans votre
 navigateur !

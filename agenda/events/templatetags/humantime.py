@@ -31,7 +31,7 @@ def event_time(start, end):
 
     # Hack! get the correct user local from the request
     #loc = locale.getlocale()
-    locale.setlocale(locale.LC_ALL, 'fr_FR')  # Force french locale !
+    locale.setlocale(locale.LC_ALL, 'fr_FR.utf8')  # Force french locale !
 
     if start == today:
         result += "Aujourd'hui "

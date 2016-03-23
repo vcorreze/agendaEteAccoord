@@ -6,13 +6,13 @@ except ImportError:
     from setuptools import setup, find_packages
 
 setup(name='agenda',
-      version='1.2.0',
+      version='1.3.0',
       description="",
       long_description="",
       classifiers=[],
       keywords='',
-      author='Mathieu Leduc-Hamel',
-      author_email="marrakis@gmail.com",
+      author='Sylvain Boureliou',
+      author_email="sylvain.boureliou@makina-corpus.com",
       license='',
       packages=find_packages(exclude=['ez_setup', 'examples', 'tests']),
       include_package_data=True,
