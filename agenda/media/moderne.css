@@ -1,6 +1,6 @@
 /* Copyright 2006
  * - Erwan Leherisse  <air1ontheweb CHEZ free POINT fr>
- * - M�lanie Bats  <melanie POINT bats CHEZ utbm POINT fr>
+ * - Melanie Bats  <melanie POINT bats CHEZ utbm POINT fr>
  * - Thomas Petazzoni  <thomas POINT petazzoni CHEZ enix POINT org>
  * - Jean-Marie Favreau  <jeanmarie POINT favreau CHEZ free POINT fr>
  * - Pierre-Luc Beaudoin  <pierre-luc POINT beaudoin CHEZ novopia POINT com>
@@ -22,19 +22,19 @@
  */
 
 body {
-  background-color: #c7e0ed;
-  color: black;
+  background-color: #ffed00;
+  color: #565656;
   font-size: 11pt;
   font-family: Arial,Helvetica,sans-serif;
 }
 
 div.header {
-  padding: 10px 10px 30px 10px;
+  padding: 20px 10px 0px 0px;
   background: url('/media/img/bg.png') repeat-x white;
-  height: 75px;
-  -moz-border-radius: 20px 20px 0 0;
+  min-height: 75px;
+  /* -moz-border-radius: 20px 20px 0 0;
   -webkit-border-top-left-radius: 20px;
-  -webkit-border-top-right-radius: 20px;
+  -webkit-border-top-right-radius: 20px; */
   margin: auto;
 }
 
@@ -49,16 +49,25 @@ div.footer {
   padding: 10px;
   color: black;
   text-align: center;
-  -moz-border-radius: 0 0 20px 20px;
+  /* -moz-border-radius: 0 0 20px 20px;
   -webkit-border-bottom-left-radius: 20px;
-  -webkit-border-bottom-right-radius: 20px;
+  -webkit-border-bottom-right-radius: 20px; */
   margin: auto;
 }
 
-div.header img.logo {
+div.header a.logo {
   float: left;
-  padding: 5px 10px 5px 5px;
+  padding: 5px 10px 5px 0px;
   border: 0px;
+}
+
+div.header a.logo-accoord {
+  float: right;
+  padding: 5px 10px 0px 0px;
+  border: 0px;
+}
+div.header a.logo-accoord img {
+  width: 130px;
 }
 
 div.header div.actions {
@@ -92,8 +101,13 @@ div.header div.actions div.action img {
 }
 
 h1 {
+  clear: both;
   font-family : Georgia, serif;
-  margin-bottom: 5px;
+  background-color: #fff;
+  font-size: 1.6em;
+  margin: 0;
+  padding-top: 10px;
+  text-align: center;
 }
 
 h2 {
@@ -106,15 +120,15 @@ h2.calendar {
 }
 
 a {
-  color: #336699;
+  color: #565656;
 }
 
 a:visited {
-  color: #336699;
+  color: #565656;
 }
 
 a:hover, a:active {
-  color: #5b8ec2;
+  color: #000000;
 }
 
 table.form {
@@ -309,6 +323,7 @@ form#filter {
 
 img#arrow {
   border: 0px;
+  margin: 0 10px 0 10px;
   vertical-align: middle;
 }
 
@@ -333,4 +348,156 @@ input#id_submiter_email {
 
 h1 a {
   text-decoration: none;
+}
+
+/******************************************
+ **** MAIN ACCORD PERSONALISATIONS ********/
+
+/*
+ * Home page
+ */
+
+body.home-page {
+  margin:0;
+  padding:0;
+  background: url(/media/img/accueil-image-de-fond.jpg) no-repeat center fixed;
+  -webkit-background-size: cover; /* pour anciens Chrome et Safari */
+  background-size: cover; /* version standardisée */
+}
+body.home-page div.header,
+body.home-page h1,
+body.home-page div.main {
+  background: none;
+}
+
+body.home-page h1 a {
+  background: rgba(255, 255, 255, .7);
+  padding: 6px;
+}
+body.home-page div.footer {
+  background: rgba(255, 255, 255, .7);
+  padding: 6px;
+}
+
+/*
+ * Home page > Carte
+ */
+
+#homepage-carte-container {
+  margin: auto;
+  margin-top: 20px;
+  max-width: 700px;
+  background: rgba(255, 255, 255, .7);
+}
+
+#homepage-carte-container {
+  position: relative;
+}
+#homepage-carte-container img {
+  width: 100%;
+  max-height: 100%;
+  /* border: 1px solid black; */
+}
+#homepage-carte-container a {
+  position:absolute;
+  text-decoration: none;
+  font-size: 1.5em;
+  padding: 10px;
+  color: black;
+}
+#homepage-carte-nord { top: 27%; left: 40%; }
+#homepage-carte-est-erdre { top: 37%; left: 62%; }
+#homepage-carte-centre-sud { top: 60%; left: 40%; }
+#homepage-carte-ouest { top: 67%; left: 21%; }
+@media screen and (max-width: 560px) {
+  /* recenter links */
+  #homepage-carte-container a {
+    font-size: 1.2em;
+  }
+  #homepage-carte-nord { top: 27%; left: 38%; }
+  #homepage-carte-est-erdre { top: 37%; left: 60%; }
+  #homepage-carte-centre-sud { top: 56%; left: 38%; }
+  #homepage-carte-ouest { top: 65%; left: 19%; }
+}
+
+/*
+ * Home page > Par quartier et équipement
+ */
+
+#homepage-quartier-equipements-container {
+  margin: auto;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  max-width: 700px;
+  background: rgba(255, 255, 255, .7);
+  text-align: left;
+}
+#homepage-quartier-equipements-container div {
+  padding: 10px;
+  margin: 10px;
+  color: black;
+}
+#homepage-quartier-equipements-container div a {
+  color: black;
+}
+/* Centre-Sud color */
+#homepage-quartier-equipements-container div.grand-quartier-0 {
+  background-color: rgba(174, 57, 138, .4);
+}
+/* Ouest color */
+#homepage-quartier-equipements-container div.grand-quartier-1 {
+  background-color: rgba(245, 166, 42, .4);
+}
+/* Nord color */
+#homepage-quartier-equipements-container div.grand-quartier-2 {
+  background-color: rgba(227, 32, 77, .4);
+}
+/* Est-Erdre color */
+#homepage-quartier-equipements-container div.grand-quartier-3 {
+  background-color: rgba(187, 199, 55, .4);
+}
+
+/*
+ * Personnalisation du calendrier par grand-quartier
+ */
+
+/* Centre-Sud color */
+.grand-quartier-0 h1 a {
+  color: #ae398a;
+}
+/* Ouest color */
+.grand-quartier-1 h1 a {
+  color: #f5a62a;
+}
+/* Nord color */
+.grand-quartier-2 h1 a {
+  color: #e3204d;
+}
+/* Est-Erdre color */
+.grand-quartier-3 h1 a {
+  color: #bbc737;
+}
+
+
+td.current_month {
+    background: #fff69f;
+}
+td.today {
+    background: #ffed00;
+}
+/* Centre-Sud color */
+.grand-quartier-0 td.past_month {
+    background: #f4e5ef;
+}
+/* Ouest color */
+.grand-quartier-1 td.past_month {
+    background: #ede0cc;
+}
+/* Nord color */
+.grand-quartier-2 td.past_month {
+    background: #f7bcc9;
+}
+/* Est-Erdre color */
+.grand-quartier-3 td.past_month {
+    background: #eaeec3;
 }

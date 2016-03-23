@@ -58,7 +58,7 @@ class City (models.Model):
     ordering = ['name']
 
   name = models.CharField (max_length=200)
-  region = models.ForeignKey(Region, verbose_name='Quartier')
+  region = models.ForeignKey(Region, verbose_name='Quartier', related_name='cities')
   latitude = models.FloatField ()
   longitude = models.FloatField ()
   address = models.CharField(max_length=200, blank=True, null=True,

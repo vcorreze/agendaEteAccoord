@@ -135,6 +135,7 @@ def stats(request):
         "region_list": region_list,
         "total": total,
         "total_to_moderate": total_to_moderate,
+        "user": request.user
     })
 
 
@@ -143,6 +144,7 @@ def feed_list(request):
 
     return render_to_response("events/feeds.html", {
         "region_list": region_list,
+        "user": request.user
     })
 
 

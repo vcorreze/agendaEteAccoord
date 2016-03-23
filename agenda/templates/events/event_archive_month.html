@@ -3,6 +3,10 @@
 {% load calendar %}
 {% load i18n %}
 
+{% block bodyclass %}{% if region %}grand-quartier-{{ region.pk }}{% else %}home-page{% endif %}{% endblock bodyclass %}
+
+{% block mainh1 %}{% if region %}<a href="?region={{ region.pk }}">{{ region }} / </a>{% endif %}{% endblock mainh1 %}
+
 {% block feeds %}
   {% if region %}
     <link rel="alternate" href="/event/feeds/latest_region/{{ region.id }}/"
@@ -41,14 +45,27 @@
   {% else %}
 
     <div style="width: 100%; text-align: center">
-    <div style="margin: 0 auto; width:50%">
-      <h2 class="calendar">Merci de sélectionner une région :</h2>
-      <ul style="list-style-type: none">
+
+      <div id="homepage-carte-container">
+        <a href="?region=2" id="homepage-carte-nord" title="L'agendu du grand quartier Nord">Nord</a>
+        <a href="?region=3" id="homepage-carte-est-erdre" title="L'agendu du grand quartier Est Erdre">Est Erdre</a>
+        <a href="?region=0" id="homepage-carte-centre-sud" title="L'agendu du grand quartier Centre Sud">Centre Sud</a>
+        <a href="?region=1" id="homepage-carte-ouest" title="L'agendu du grand quartier Ouest">Ouest</a>
+        <img src="/media/img/accueil-image-carte.png" alt="Carte des grands quartiers" />
+      </div>
+
+      <div id="homepage-quartier-equipements-container">
         {% for r in regions %}
-          <li><a href="{{ request.build_absolute_uri }}?region={{ r.pk }}" title="{{ r }}">{{ r }}</a></li>
+          <div class="grand-quartier-{{ r.pk }}">
+            <strong><a href="?region={{ r.pk }}" title="{{ r }}">{{ r }}</a></strong> :
+            {% for c in r.cities.all %}
+              <a href="?region={{ r.pk }}&city={{ c.pk }}" title="{{ c }}">{{ c }}</a>
+              {% if not forloop.last %} - {% endif %}
+            {% endfor %}
+          </div>
         {% endfor %}
-      </ul>
-    </div>
+      </div>
+
     </div>
 
   {% endif %}

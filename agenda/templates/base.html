@@ -28,38 +28,35 @@
           type="text/calendar" />
   </head>
 
-  <body>
+  <body class="{% block bodyclass %}{% endblock bodyclass %}">
     <div class="header">
-      <a href="/"><img class="logo" src="/media/img/logo.png"/></a>
+      <a class="logo" href="/"><img src="/media/img/logo.png"/></a>
+      <a class="logo-accoord" href="http://www.accoord.fr"><img src="/media/img/logo-accoord.png"/></a>
       <div class="actions">
+
+        {% comment %}
         {% block actions %}
-        <div class="action">
-          <a href="/event/feeds/">
-            <img src="/media/img/rss.png" />
-          </a>
-          <a href="/event/feeds/">{% trans "Fils RSS et iCal" %}</a>
-        </div>
-        {% if user.is_authenticated %}
           <div class="action">
-            <a href="/event/new/">
-              <img src="/media/img/appointment-new.png" />
-            </a>
-            <a href="/event/new/">{% trans "Proposer un événement" %}</a>
+            <a href="/event/feeds/"><img src="/media/img/rss.png" /></a>
+            <a href="/event/feeds/">{% trans "Fils RSS et iCal" %}</a>
           </div>
-          <div class="action">
-            <a href="{% url 'moderate_my_events' %}">
-            <img src="/media/img/appointment-new.png" />
-            </a>
-            <a href="{% url 'moderate_my_events' %}">{% trans "Modération" %}</a>
-          </div>
-          <div class="action">
-            <a href="/logout">
-              <img width="16" src="/media/img/login.png" />
-            </a>
-            <a href="/logout/">{% trans "Déconnexion" %}</a>
-          </div>
-        {% endif %}
+          {% if user.is_authenticated %}
+            <div class="action">
+              <a href="/event/new/"><img src="/media/img/appointment-new.png" /></a>
+              <a href="/event/new/">{% trans "Proposer un événement" %}</a>
+            </div>
+            <div class="action">
+              <a href="{% url 'moderate_my_events' %}"><img src="/media/img/appointment-new.png" /></a>
+              <a href="{% url 'moderate_my_events' %}">{% trans "Modération" %}</a>
+            </div>
+            <div class="action">
+              <a href="/logout"><img width="16" src="/media/img/login.png" /></a>
+              <a href="/logout/">{% trans "Déconnexion" %}</a>
+            </div>
+          {% endif %}
         {% endblock %}
+        {% endcomment %}
+
         {% comment %}
           <div class="language-selector action" style="margin-top: 4px; margin-left: 20px;">
             <form action="/i18n/setlang/" method="post">{% csrf_token %}
@@ -75,11 +72,11 @@
             </form>
           </div>
         {% endcomment %}
+
       </div>
       <h1>
-        <a href="/">{% trans "L'Agenda de l'Accoord" %}</a>
+        {% block mainh1 %}{% endblock mainh1 %}<a href="/">{% trans "Calendrier des animations" %}</a>
       </h1>
-      <p id="subtitle">{% trans "Association pour la réalisation d'activités éducatives, sociales et culturelles de la ville de Nantes " %}</p>
     </div>
     <div class="main">
       {% block content %}
@@ -87,29 +84,17 @@
     </div>
     <div class="footer">
       <p>
-        <a href="{% url 'index' %}">
-          {% trans "Agenda" %}
-        </a> -
-        <a href="{% url 'about' %}">
-          {% trans "À propos" %}
-        </a> -
+        <a href="{% url 'index' %}">{% trans "Agenda" %}</a> -
+        <a href="{% url 'about' %}">{% trans "À propos" %}</a> -
+        <a href="{% url 'feed_list' %}">{% trans "Fils RSS et iCal" %}</a> -
+        <a href="{% url 'stats' %}">{% trans "Statistiques" %}</a> -
+        <a href="mailto:support.si@accoord.fr">{% trans "Contact" %}</a>
         {% if user.is_authenticated %}
-          <a href="{% url 'propose' %}">
-            {% trans "Proposer un événement" %}
-          </a> -
-          <a href="{% url 'moderate_my_events' %}">
-            {% trans "Modération" %}
-          </a> -
+          -
+          <a href="{% url 'propose' %}">{% trans "Proposer un événement" %}</a> -
+          <a href="{% url 'moderate_my_events' %}">{% trans "Modération" %}</a> -
+          <a href="/logout/">{% trans "Déconnexion" %}</a>
         {% endif %}
-        <a href="{% url 'feed_list' %}">
-          {% trans "Fils RSS et iCal" %}
-        </a> -
-        <a href="{% url 'stats' %}">
-          {% trans "Statistiques" %}
-        </a> -
-        <a href="mailto:support.si@accoord.fr">
-          {% trans "Contact" %}
-        </a>
       </p>
       <br />
       <!-- Twitter button -->
