@@ -183,7 +183,25 @@ Le fichier de configuration
 Il est auto-généré par le buildout à partir du template agendaEteAccoord/conf/nginx.conf.ini
 et se trouve ici : /home/agendadulibre/agendaEteAccoord/etc/nginx/nginx.conf
 
+Production : Astuces
+=====================
 
+Vérifier la locale
+----------------------
+
+    $ locale -a
+    C
+    C.UTF-8
+    fr_FR.utf8
+    POSIX
+
+Il faut s'assurer que la locale définie dans le fichier agenda/events/templatetags/humantime.py (ligne 34, 
+utilisé pour l'affichage des dates lors de la consultation d'un événement) soit bien une des locales 
+disponible sur le serveur.
+
+La page suivante explique l'erreur rencontrée par Python si cette condition n'est pas respectée, et donne des 
+informations sur la consultation et l'ajout de nouvelles locales sur Debian.
+https://stackoverflow.com/questions/14547631/python-locale-error-unsupported-locale-setting
 
 
 
