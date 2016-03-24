@@ -22,8 +22,8 @@ DATABASES = {
     "default": {
         # PostgreSQL - See https://docs.djangoproject.com/en/1.9/ref/databases/#postgresql-notes
         "ENGINE": 'django.db.backends.postgresql_psycopg2',
-        "NAME": 'agendadulibre',
-        "USER": 'agendadulibre',
+        "NAME": 'agenda',
+        "USER": 'agenda',
         "PASSWORD": '*********',
         "HOST": '127.0.0.1',
         "PORT": '',

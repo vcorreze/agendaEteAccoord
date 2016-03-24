@@ -16,8 +16,8 @@ MANAGERS = ADMINS
 DATABASES = {
     "default": {
         "ENGINE": 'django.db.backends.sqlite3',
-        "NAME": 'agendadulibre.sqlite',
-        "USER": 'agendadulibre',
+        "NAME": 'agenda.sqlite',
+        "USER": 'agenda',
         "PASSWORD": '',
         "HOST": '',
         "PORT": '',
@@ -33,7 +33,7 @@ TIME_ZONE = 'Europe/Paris'
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
-LANGUAGE_CODE = 'fr-FR'
+LANGUAGE_CODE = 'fr-FR.utf8'
 
 SITE_ID = 1
 
@@ -126,7 +126,7 @@ FORCE_SCRIPT_NAME = ''
 
 MAX_TAG_LENGTH = 255
 
-FROM_EMAIL = "vincent.correze@accoord.fr"
+FROM_EMAIL = "agenda@accoord.fr"
 ENABLE_MAIL = False
 
 LOGIN_URL = "/login"
