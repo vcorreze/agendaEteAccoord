@@ -1,106 +1,109 @@
-{% load banner %}
-{% load i18n %}
+{% load banner %} {% load i18n %}
 
-<?xml version="1.0" encoding="utf-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<?xml version="1.0" encoding="utf-8"?>
+    <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+    <html xmlns="http://www.w3.org/1999/xhtml">
 
-  <head>
-    {% block title %}
-      <title>{% trans "L'Agenda de l'Accoord" %}</title>
-    {% endblock title %}
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <meta name="google-site-verification" content="rz4d48R0H-Yiap5gO405faHZiTN-MiLNkkmlbhjsNSY" />
-    <link rel="stylesheet" type="text/css" href="/media/moderne.css" title="Moderne" />
-    <link rel="shortcut icon" type="image/x-icon" href="/media/img/favicon.png" />
-    {% block feeds %}
-    {% endblock feeds %}
-    <link rel="alternate"
-          href="/event/feeds/latest/"
-          title="{% trans "L'Agenda de l'Accoord, nouveaux événements" %}"
-          type="application/rss+xml" />
-    <link rel="alternate"
-          href="/event/feeds/upcoming/"
-          title="{% trans "L'Agenda de l'Accoord, prochains événements" %}"
-          type="application/rss+xml" />
-    <link rel="alternate"
-          href="/event/calendar/"
-          title="{% trans "L'Agenda de l'Accoord, calendrier numérique" %}"
-          type="text/calendar" />
-  </head>
+    <head>
+        {% block title %}
+        <title>{% trans "L'Agenda de l'Accoord" %}</title>
+        {% endblock title %}
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="google-site-verification" content="rz4d48R0H-Yiap5gO405faHZiTN-MiLNkkmlbhjsNSY" />
+        <link rel="stylesheet" type="text/css" href="/media/moderne.css" title="Moderne" />
+        <link rel="shortcut icon" type="image/x-icon" href="/media/img/favicon.png" /> {% block feeds %} {% endblock feeds %}
+        <link rel="alternate" href="/event/feeds/latest/" title="{% trans " L 'Agenda de l'Accoord, nouveaux événements " %}" type="application/rss+xml" />
+        <link rel="alternate" href="/event/feeds/upcoming/" title="{% trans " L 'Agenda de l'Accoord, prochains événements " %}" type="application/rss+xml" />
+        <link rel="alternate" href="/event/calendar/" title="{% trans " L 'Agenda de l'Accoord, calendrier numérique " %}" type="text/calendar" />
+    </head>
 
-  <body class="{% block bodyclass %}{% endblock bodyclass %}">
-    <div class="header">
-      <a class="logo" href="/"><img src="/media/img/logo.png"/></a>
-      <a class="logo-accoord" href="http://www.accoord.fr"><img src="/media/img/logo-accoord.png"/></a>
-      <div class="actions">
+    <body class="{% block bodyclass %}{% endblock bodyclass %}">
+        <div class="header">
+            <a class="logo" href="/"><img src="/media/img/logo.png" /></a>
+            <a class="logo-accoord" href="http://www.accoord.fr"><img src="/media/img/logo-accoord.png" /></a>
+            <div class="actions">
 
-        {% comment %}
-        {% block actions %}
-          <div class="action">
-            <a href="/event/feeds/"><img src="/media/img/rss.png" /></a>
-            <a href="/event/feeds/">{% trans "Fils RSS et iCal" %}</a>
-          </div>
-          {% if user.is_authenticated %}
-            <div class="action">
-              <a href="/event/new/"><img src="/media/img/appointment-new.png" /></a>
-              <a href="/event/new/">{% trans "Proposer un événement" %}</a>
+                {% comment %} {% block actions %}
+                <div class="action">
+                    <a href="/event/feeds/"><img src="/media/img/rss.png" /></a>
+                    <a href="/event/feeds/">{% trans "Fils RSS et iCal" %}</a>
+                </div>
+                {% if user.is_authenticated %}
+                <div class="action">
+                    <a href="/event/new/"><img src="/media/img/appointment-new.png" /></a>
+                    <a href="/event/new/">{% trans "Proposer un événement" %}</a>
+                </div>
+                <div class="action">
+                    <a href="{% url 'moderate_my_events' %}"><img src="/media/img/appointment-new.png" /></a>
+                    <a href="{% url 'moderate_my_events' %}">{% trans "Modération" %}</a>
+                </div>
+                <div class="action">
+                    <a href="/logout"><img width="16" src="/media/img/login.png" /></a>
+                    <a href="/logout/">{% trans "Déconnexion" %}</a>
+                </div>
+                {% endif %} {% endblock %} {% endcomment %} {% comment %}
+                <div class="language-selector action" style="margin-top: 4px; margin-left: 20px;">
+                    <form action="/i18n/setlang/" method="post">{% csrf_token %}
+                        <input name="next" type="hidden" value="{{ redirect_to }}" />
+                        <select name="language">
+                            {% get_current_language as LANGUAGE_CODE %} {% get_available_languages as LANGUAGES %} {% for code, language in LANGUAGES %}
+                            <option value="{{ code }}" {% if code==LANGUAGE_CODE %}selected="selected" {% endif %}>{{ language }} ({{ code }})</option>
+                            {% endfor %}
+                        </select>
+                        <input type="submit" value="Go" />
+                    </form>
+                </div>
+                {% endcomment %}
+
             </div>
-            <div class="action">
-              <a href="{% url 'moderate_my_events' %}"><img src="/media/img/appointment-new.png" /></a>
-              <a href="{% url 'moderate_my_events' %}">{% trans "Modération" %}</a>
-            </div>
-            <div class="action">
-              <a href="/logout"><img width="16" src="/media/img/login.png" /></a>
-              <a href="/logout/">{% trans "Déconnexion" %}</a>
-            </div>
-          {% endif %}
-        {% endblock %}
-        {% endcomment %}
-
-        {% comment %}
-          <div class="language-selector action" style="margin-top: 4px; margin-left: 20px;">
-            <form action="/i18n/setlang/" method="post">{% csrf_token %}
-              <input name="next" type="hidden" value="{{ redirect_to }}" />
-              <select name="language">
-                {% get_current_language as LANGUAGE_CODE %}
-                {% get_available_languages as LANGUAGES %}
-                {% for code, language in LANGUAGES %}
-                <option value="{{ code }}" {% if code == LANGUAGE_CODE %}selected="selected"{% endif %}>{{ language }} ({{ code }})</option>
-                {% endfor %}
-              </select>
-              <input type="submit" value="Go" />
-            </form>
-          </div>
-        {% endcomment %}
-
-      </div>
-      <h1>
+            <h1>
         {% block mainh1 %}{% endblock mainh1 %}<a href="/">{% trans "Calendrier des animations" %}</a>
       </h1>
-    </div>
-    <div class="main">
-      {% block content %}
-      {% endblock content %}
-    </div>
-    <div class="footer">
-      <p>
-        <a href="{% url 'index' %}">{% trans "Agenda" %}</a> -
-        <a href="{% url 'about' %}">{% trans "À propos" %}</a> -
-        <a href="{% url 'feed_list' %}">{% trans "Fils RSS et iCal" %}</a> -
-        <a href="{% url 'stats' %}">{% trans "Statistiques" %}</a> -
-        <a href="mailto:support.si@accoord.fr">{% trans "Contact" %}</a>
-        {% if user.is_authenticated %}
-          -
-          <a href="{% url 'propose' %}">{% trans "Proposer un événement" %}</a> -
-          <a href="{% url 'moderate_my_events' %}">{% trans "Modération" %}</a> -
-          <a href="/logout/">{% trans "Déconnexion" %}</a>
-        {% endif %}
-      </p>
-      <br />
-      <!-- Twitter button -->
-      <a href="https://twitter.com/accoordnantes" class="twitter-follow-button" data-show-count="false" data-size="large" data-show-screen-name="false">Follow @AccoordNantes</a>
-      <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
-    </div>
-    {% block before_end_body %}{% endblock %}
-  </body>
-</html>
+        </div>
+        <div class="main">
+            {% block content %} {% endblock content %}
+        </div>
+        <div class="footer">
+            <p>
+                <a href="{% url 'index' %}">{% trans "Agenda" %}</a> -
+                <a href="{% url 'about' %}">{% trans "À propos" %}</a> -
+                <a href="{% url 'feed_list' %}">{% trans "Fils RSS et iCal" %}</a> -
+                <a href="{% url 'stats' %}">{% trans "Statistiques" %}</a> -
+                <a href="mailto:support.si@accoord.fr">{% trans "Contact" %}</a> {% if user.is_authenticated %} -
+                <a href="{% url 'propose' %}">{% trans "Proposer un événement" %}</a> -
+                <a href="{% url 'moderate_my_events' %}">{% trans "Modération" %}</a> -
+                <a href="/logout/">{% trans "Déconnexion" %}</a> {% endif %}
+            </p>
+            <br />
+            <!-- Facebook button -->
+            <div id="fb-root"></div>
+            <script>
+                (function (d, s, id) {
+                    var js, fjs = d.getElementsByTagName(s)[0];
+                    if (d.getElementById(id)) return;
+                    js = d.createElement(s);
+                    js.id = id;
+                    js.src = "//connect.facebook.net/fr_FR/sdk.js#xfbml=1&version=v2.5";
+                    fjs.parentNode.insertBefore(js, fjs);
+                }(document, 'script', 'facebook-jssdk'));
+            </script>
+            <div class="fb-like" data-href="https://developers.facebook.com/docs/plugins/" data-layout="button" data-action="like" data-show-faces="true" data-share="true"></div>
+            <!-- Twitter button -->
+            <a href="https://twitter.com/accoordnantes" class="twitter-follow-button" data-show-count="false" data-size="large" data-show-screen-name="false">Follow @AccoordNantes</a>
+            <script>
+                ! function (d, s, id) {
+                    var js, fjs = d.getElementsByTagName(s)[0],
+                        p = /^http:/.test(d.location) ? 'http' : 'https';
+                    if (!d.getElementById(id)) {
+                        js = d.createElement(s);
+                        js.id = id;
+                        js.src = p + '://platform.twitter.com/widgets.js';
+                        fjs.parentNode.insertBefore(js, fjs);
+                    }
+                }(document, 'script', 'twitter-wjs');
+            </script>
+        </div>
+        {% block before_end_body %}{% endblock %}
+    </body>
+
+    </html>
