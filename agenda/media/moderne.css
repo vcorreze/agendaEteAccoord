@@ -588,3 +588,8 @@ td.today {
 .grand-quartier-3 td.past_month {
     background: #eaeec3;
 }
+
+/* Alignement twitter & fb */
+.twitter-follow-button {
+	vertical-align:middle;
+}

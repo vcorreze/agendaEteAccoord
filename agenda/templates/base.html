@@ -69,7 +69,7 @@
                 <a href="{% url 'about' %}">{% trans "À propos" %}</a> -
                 <a href="{% url 'feed_list' %}">{% trans "Fils RSS et iCal" %}</a> -
                 <a href="{% url 'stats' %}">{% trans "Statistiques" %}</a> -
-                <a href="mailto:support.si@accoord.fr">{% trans "Contact" %}</a> {% if user.is_authenticated %} -
+                <a href="mailto:agenda@accoord.fr">{% trans "Contact" %}</a> {% if user.is_authenticated %} -
                 <a href="{% url 'propose' %}">{% trans "Proposer un événement" %}</a> -
                 <a href="{% url 'moderate_my_events' %}">{% trans "Modération" %}</a> -
                 <a href="/logout/">{% trans "Déconnexion" %}</a> {% endif %}
@@ -87,9 +87,9 @@
                     fjs.parentNode.insertBefore(js, fjs);
                 }(document, 'script', 'facebook-jssdk'));
             </script>
-            <div class="fb-like" data-href="https://www.facebook.com/Accoord-Les-Vacances-Des-Nantais-444270362401231" data-layout="button" data-action="like" data-show-faces="true" data-share="true"></div>
-            <!-- Twitter button -->
-            <a href="https://twitter.com/AccoordNantes" class="twitter-follow-button" data-show-count="false">Follow @AccoordNantes</a>
+	    <div class="fb-like" data-href="https://www.facebook.com/Accoord-Les-Vacances-Des-Nantais-444270362401231" data-layout="button" data-action="like" data-show-faces="true" data-share="true"></div>
+	    <!-- Twitter button -->
+	   &nbsp;&nbsp;<a href="https://twitter.com/AccoordNantes" class="twitter-follow-button" data-show-screen-name="false" data-show-count="false">Follow @AccoordNantes</a></div>
             <script>
                 ! function (d, s, id) {
                     var js, fjs = d.getElementsByTagName(s)[0],
