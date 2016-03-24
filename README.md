@@ -203,6 +203,26 @@ La page suivante explique l'erreur rencontrée par Python si cette condition n'e
 informations sur la consultation et l'ajout de nouvelles locales sur Debian.
 https://stackoverflow.com/questions/14547631/python-locale-error-unsupported-locale-setting
 
+Activer le mode debug en production
+-------------------------------------
+
+En configuration de production, Django n'affiche pas le détail des erreurs 500 à l'utilisateur mais une page 
+personnalisée n'incluant pas d'information critique : agenda/templates/500.html (c'est le même principe pour 
+les erreurs 404 : agenda/templates/404.html). Par ailleurs Django envoie le détail de l'erreur par 
+email à l'administrateur du site (défini dans agenda/settings.py > ADMINS).
+
+Pour avoir le détail des erreurs affichées dans le navigateur, il faut modifier la variable DEBUG dans le fichier
+agenda/production.py : DEBUG = True
+
+Si l'envoi des emails est mal configuré, il est possible de rediriger l'écriture des emails dans les logs uniquement 
+en ajoutant la variable suivante dans le fichier agenda/production.py : EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'.
+Les emails envoyés sont alors écrits dans le fichier var/log/uwsgi.log
+
+
+
+
+
+
 
 
 
