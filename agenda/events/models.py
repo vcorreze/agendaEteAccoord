@@ -2,7 +2,7 @@
 #
 # Copyright (C) 2009 Novopia Solutions Inc.
 #
-# Author: Pierre-Luc Beaudoin <pierre-luc.beaudoin@novopia.com>
+# Author: Pierre-Luc Beaudoin <pierre-luc.beaudoin@novopia.com> + contribs
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
@@ -81,12 +81,13 @@ class Event (models.Model):
                                  blank=True, null=True,
                                  help_text="""Décrivez de la manière la plus complète possible votre événement.
                                  Les balises HTML autorisées sont &lt;p&gt;, &lt;b&gt;, &lt;i&gt;, &lt;ul&gt;, &lt;ol&gt;, &lt;li&gt;, &lt;br/&gt;, &lt;a&gt;. Utilisez &lt;h3&gt; jusqu'à &lt;h5&gt; pour diviser votre texte au besoin. Merci d'utiliser ces balises pour formater la description de votre événement. <br/>
-Veillez à utiliser les balises &lt;p&gt; pour formater les paragraphes, et non la balise &lt;br/&gt;.""")
+Veillez à utiliser les balises &lt;p&gt; pour formater les paragraphes, et non la balise &lt;br/&gt;.<br/>
+Pour formater le texte, la balise doit l'encadrer. Par exemple écrire '&lt;b&gt;ce texte en gras&lt;/b&gt;' donnera <b>ce texte en gras</b>. """)
 
   url = models.URLField(verbose_name="site web",
                         blank=True, null=True,
                         help_text="Lien direct vers une page donnant plus d'informations sur l'événement (lieu précis, horaire précis, programme précis...)")
-  tags = TagField(help_text="Une liste de mots séparés par un espace. Ne pas mettre de lieu dans les tags. <br/>Exemple: python django")
+  tags = TagField(help_text="Une liste de mots séparés par un espace. Ne pas mettre de lieu dans les tags. <br/>Exemple: sortie cinéma")
   start_time = models.DateTimeField()
   end_time = models.DateTimeField(blank=True, null=True)
 
@@ -95,13 +96,15 @@ Veillez à utiliser les balises &lt;p&gt; pour formater les paragraphes, et non 
 
   venue = models.CharField(max_length=200, blank=True, null=True,
                             verbose_name="Nom de l'endroit",
-                            help_text="Optionnel. Nom de l'endroit où se déroule l'événement. <br/>Exemple: Pub chez Moe")
+                            help_text="Optionnel. Nom de l'endroit où se déroule l'événement. <br/>Exemple: MQ Doulon, salle de spectacle")
 
   address = models.CharField(max_length=200, blank=True, null=True,
                              verbose_name="Adresse",
-                             help_text="Adresse complète")
+                             help_text="Adresse complète (avec Code Postal et Ville)")
 
-  city = models.ForeignKey(City, blank=True, null=True, verbose_name="Équipement")
+  city = models.ForeignKey(City, blank=True, null=True,
+                           verbose_name="Équipement",
+                           help_text="<b>N'oubliez-pas de choisir l'équipement concerné</b>")
   latitude = models.FloatField(blank=True, null=True, default=0)
   longitude = models.FloatField(blank=True, null=True, default=0)
 
