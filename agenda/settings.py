@@ -8,7 +8,7 @@ TEMPLATE_DEBUG = DEBUG
 PROJECT_ROOT = os.path.dirname(agenda.__file__)
 
 ADMINS = (
-    ('Vincent Corrèze', 'vincent.correze@accoord.fr'),
+    ('SI Accoord', 'si@accoord.fr'),
 )
 
 MANAGERS = ADMINS
@@ -126,7 +126,7 @@ FORCE_SCRIPT_NAME = ''
 
 MAX_TAG_LENGTH = 255
 
-FROM_EMAIL = "agenda@accoord.fr"
+FROM_EMAIL = "noreply@accoord.fr"
 ENABLE_MAIL = False
 
 LOGIN_URL = "/login"
