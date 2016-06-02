@@ -1,38 +1,80 @@
-{% extends "base.html" %} {% load humanize %} {% load humantime %} {% load i18n %} {% block title %}
-<title>{{ event.title }}</title>
-{% endblock title %} {% block content %}
-<h2><a href="{{ event.url }}">{{ event.title }}</a></h2> {% if user.is_authenticated and user == event.city.region.moderator %}
-<h3>
-      {% if event.moderated %}
-        <a href="{% url 'unmoderate' event.id %}"><img src="/media/img/delete.png" /></a>
-        <a href="{% url 'unmoderate' event.id %}">Démodérer</a>
-      {% else %}
-        <a href="{% url 'moderate' event.id %}"><img src="/media/img/apply.png" /></a>
-        <a href="{% url 'moderate' event.id %}">{% trans "Modérer" %}</a>
-      {% endif %}
-      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      <a href="{% url 'edit' event.id %}">{% trans "Modifier" %}</a>
-      -
-      <a href="{% url 'delete_confirm' event.id %}">{% trans "Supprimer" %}</a>
-    </h3> {% endif %}
-<b class="date">{{ event.start_time|event_time:event.end_time }}</b>
-<br/>
-<br/> {% if event.latitude and event.longitude %}
-<iframe width="425" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://www.openstreetmap.org/export/embed.html?bbox={{ event.bbox|join:'%2C' }}&amp;layer=mapnik&amp;marker={{ event.latitude|stringformat:" f " }}%2C{{ event.longitude|stringformat:"f " }}" style="border: 1px solid black"></iframe>
-<br/><small><a href="https://www.openstreetmap.org/?mlat={{ event.latitude|stringformat:"f" }}&mlon={{ event.longitude|stringformat:"f" }}#map=19/{{ event.latitude|stringformat:"f" }}/{{ event.longitude|stringformat:"f" }}">{% trans "Voir une carte plus détaillée" %}</a></small>
-<br/> {% endif %} {% if event.venue %}
-<b>{{ event.venue}}</b>
-<br/> {% endif %} {{ event.address}}
-<br/> {{ event.city }}
-<br/>
-<h3>{% trans "Description" %}</h3> {% autoescape off %} {{ event.description }} {% endautoescape %}
-<br/>
-<h3>{% trans "Informations" %}</h3> {% trans "Personne ressource" %} : <a href="mailto:{{ event.contact_email }}">{{ event.contact }}</a>
-<br/> {% trans "Tags" %}: {{ event.tags }}
+{% extends "base.html" %}
+{% load humanize %}
+{% load humantime %}
+{% load i18n %}
+
+{% block title %}<title>{{ event.title }}</title>{% endblock title %}
+
+{% block content %}
+<div id="event-page">
+
+<h2>{{ event.title }}</h2>
+
+{% if user.is_authenticated and user == event.city.region.moderator %}
+  <h3 class="no-print">
+    {% if event.moderated %}
+      <a href="{% url 'unmoderate' event.id %}"><img src="/media/img/delete.png" /></a>
+      <a href="{% url 'unmoderate' event.id %}">Démodérer</a>
+    {% else %}
+      <a href="{% url 'moderate' event.id %}"><img src="/media/img/apply.png" /></a>
+      <a href="{% url 'moderate' event.id %}">{% trans "Modérer" %}</a>
+    {% endif %}
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <a href="{% url 'edit' event.id %}">{% trans "Modifier" %}</a>
+    -
+    <a href="{% url 'delete_confirm' event.id %}">{% trans "Supprimer" %}</a>
+  </h3>
+{% endif %}
+
+<strong class="date">
+    {{ event.start_time|event_time:event.end_time }}
+</strong>
+
+{% if event.latitude and event.longitude %}
+  <div id="event-map">
+    <iframe class="no-print" width="425" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"
+            src="https://www.openstreetmap.org/export/embed.html?bbox={{ event.bbox|join:'%2C' }}&amp;layer=mapnik&amp;marker={{ event.latitude|stringformat:" f " }}%2C{{ event.longitude|stringformat:"f " }}"
+            style="border: 1px solid black"></iframe>
+    <div class="no-print">
+      <small><a href="https://www.openstreetmap.org/?mlat={{ event.latitude|stringformat:"f" }}&mlon={{ event.longitude|stringformat:"f" }}#map=19/{{ event.latitude|stringformat:"f" }}/{{ event.longitude|stringformat:"f" }}">{% trans "Voir une carte plus détaillée" %}</a></small>
+    </div>
+  </div>
+{% endif %}
+
+{% if event.venue %}
+  <div><strong>{{ event.venue}}</strong></div>
+{% endif %}
+
+{% if event.address %}
+  <div>{{ event.address}}</div>
+{% endif %}
+
+<div>{{ event.city }}</div>
+
+{% if event.description %}
+  <h3>{% trans "Description" %}</h3>
+  <div>{% autoescape off %} {{ event.description }} {% endautoescape %}</div>
+{% endif %}
+
+<h3>{% trans "Informations" %}</h3>
+
+{% if event.url %}
+  <div>{% trans "Site internet" %} : <a href="{{ event.url }}">{{ event.url }}</a></div>
+{% endif %}
+
+<div>
+  {% trans "Contact" %} :
+  {{ event.contact }} <a href="mailto:{{ event.contact_email }}">({{ event.contact_email }})</a>
+</div>
+
+{% if event.tags %}
+  <div>{% trans "Tags" %}: {{ event.tags }}</div>
+{% endif %}
+
 <p class="not-important">
-    {% comment %}{% trans "Porté" %}: {{ event.get_scope_display }}
-    <br/>{% endcomment %} {% trans "Ajouté le" %}: {{ event.submission_time }}
-    <br/> {% trans "Dernière mise-à-jour le" %}: {{ event.updated_time }}
-    <br/>
+  {% trans "Ajouté le" %}: {{ event.submission_time }}<br />
+  {% trans "Dernière mise-à-jour le" %}: {{ event.updated_time }}
 </p>
+
+</div>
 {% endblock %}

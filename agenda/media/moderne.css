@@ -314,7 +314,7 @@ table.list td.value {
     text-align: right;
 }
 
-b.date {
+b.date, strong.date {
     font-size: 12pt;
 }
 
@@ -592,4 +592,12 @@ td.today {
 /* Alignement twitter & fb */
 .twitter-follow-button {
 	vertical-align:middle;
+}
+
+
+/* Event page */
+
+#event-page #event-map {
+    padding-top: 10px;
+    padding-bottom: 10px;
 }

@@ -1,0 +1,10 @@
+/* Use class="no-print" to remove an element when printing */
+.no-print {
+    display: none;
+}
+
+/* Remove main background */
+body {
+    background: none;
+}
+
