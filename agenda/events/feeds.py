@@ -128,7 +128,7 @@ class UpcomingEventCalendar(ICalendarFeed):
         return u"Tous les événements de l'Agenda de l'Accoord"
 
     def timezone(self):
-        return u"America/Montreal"
+        return u"Europe/Paris"
 
     def items(self):
         start = date.today() - timedelta(days=30)
@@ -170,7 +170,7 @@ class UpcomingEventCalendarByRegion (ICalendarFeed):
                 + self.region.name)
 
     def timezone(self):
-        return u"America/Montreal"
+        return u"Europe/Paris"
 
     def items(self):
         start = date.today() - timedelta(days=30)
