@@ -1,4 +1,5 @@
-/* Copyright 2006
+ /* Copyright 2006
+ * - Vincent Corrèze <si CHEZ accoord POINT fr>
  * - Erwan Leherisse  <air1ontheweb CHEZ free POINT fr>
  * - Melanie Bats  <melanie POINT bats CHEZ utbm POINT fr>
  * - Thomas Petazzoni  <thomas POINT petazzoni CHEZ enix POINT org>
@@ -21,575 +22,530 @@
  * 02111-1307, USA.
  */
 
-body {
-    background-color: #ffed00;
-    color: #565656;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 11pt;
-}
+ body {
+     background-color: #ffed00;
+     color: #565656;
+     font-family: 'Open Sans', sans-serif;
+     font-size: 11pt;
+ }
 
-div.header {
-    padding: 20px 10px 0 0;
-    background: url('/media/img/bg.png') repeat-x white;
-    min-height: 75px;
-    /* -moz-border-radius: 20px 20px 0 0;
+ div.header {
+     padding: 20px 10px 0 0;
+     background: url('/media/img/bg.png') repeat-x white;
+     min-height: 75px;
+     /* -moz-border-radius: 20px 20px 0 0;
   -webkit-border-top-left-radius: 20px;
   -webkit-border-top-right-radius: 20px; */
-    margin: auto;
-}
+     margin: auto;
+ }
 
-div.main {
-    padding: 10px;
-    background: white;
-    margin: auto;
-}
+ div.main {
+     padding: 10px;
+     background: white;
+     margin: auto;
+ }
 
-div.footer {
-    background: url('/media/img/bg.png') repeat-x white;
-    padding: 10px;
-    color: black;
-    text-align: center;
-    /* -moz-border-radius: 0 0 20px 20px;
+ div.footer {
+     background: url('/media/img/bg.png') repeat-x white;
+     padding: 10px;
+     color: black;
+     text-align: center;
+     /* -moz-border-radius: 0 0 20px 20px;
   -webkit-border-bottom-left-radius: 20px;
   -webkit-border-bottom-right-radius: 20px; */
-    margin: auto;
-}
+     margin: auto;
+ }
 
-div.header a.logo {
-    float: left;
-    padding: 5px 10px 5px 0;
-    border: 0;
-}
+ div.header a.logo {
+     float: left;
+     padding: 5px 10px 5px 0;
+     border: 0;
+ }
 
-div.header a.logo-accoord {
-    float: right;
-    padding: 5px 10px 0 0;
-    border: 0;
-}
+ div.header a.logo-accoord {
+     float: right;
+     padding: 5px 10px 0 0;
+     border: 0;
+ }
 
-div.header a.logo-accoord img {
-    width: 130px;
-}
+ div.header a.logo-accoord img {
+     width: 130px;
+ }
 
-div.header div.actions {
-    float: right;
-    padding: 10px 10px 10px 10px;
-    margin-right: 125px;
-    margin-top: 10px;
-}
+ div.header div.actions {
+     float: right;
+     padding: 10px 10px 10px 10px;
+     margin-right: 125px;
+     margin-top: 10px;
+ }
 
-div.header div.actions div.action img {
-    border: 0;
-    padding: 2px 5px 2px 2px;
-    vertical-align: middle;
-}
+ div.header div.actions div.action img {
+     border: 0;
+     padding: 2px 5px 2px 2px;
+     vertical-align: middle;
+ }
 
-#important {
-    position: absolute;
-    border: 1px dashed black;
-    float: right;
-    top: 1.5em;
-    right: 1.5em;
-    width: 20.5em;
-}
+ #important {
+     position: absolute;
+     border: 1px dashed black;
+     float: right;
+     top: 1.5em;
+     right: 1.5em;
+     width: 20.5em;
+ }
 
-#important p {
-    margin: 0;
-    padding: 2px;
-    font-size: 12pt;
-}
+ #important p {
+     margin: 0;
+     padding: 2px;
+     font-size: 12pt;
+ }
 
-h1 {
-    clear: both;
-    font-family: Verdana, Arial, Helvetica, sans-serif;
-    background-color: #fff;
-    font-size: 1.6em;
-    margin: 0;
-    padding-top: 10px;
-    text-align: center;
-}
+ h1 {
+     clear: both;
+     font-family: 'Dosis', sans-serif;
+     background-color: #fff;
+     font-size: 1.6em;
+     margin: 0;
+     padding-top: 10px;
+     text-align: center;
+ }
 
-h2 {
-    color: #5d6064;
-    margin-top: 0;
-}
+ h2 {
+     font-family: 'Dosis', sans-serif;
+     color: #5d6064;
+     margin-top: 0;
+ }
 
-h2.calendar {
-    text-align: center;
-}
+ h2.calendar {
+     text-align: center;
+ }
 
-a {
-    color: #565656;
-}
+ a {
+     color: #565656;
+ }
 
-a:visited {
-    color: #565656;
-}
+ a:visited {
+     color: #565656;
+ }
 
-a:hover,
-a:active {
-    color: #000000;
-}
+ a:hover,
+ a:active {
+     color: #000000;
+ }
 
-table.form {
-    border-collapse: collapse;
-}
+ table.form {
+     border-collapse: collapse;
+ }
 
-table.form th {
-    text-align: right;
-    vertical-align: top;
-    white-space: nowrap;
-    padding: 2px;
-    border-bottom: 1px #eee solid;
-}
+ table.form th {
+     text-align: right;
+     vertical-align: top;
+     white-space: nowrap;
+     padding: 2px;
+     border-bottom: 1px #eee solid;
+ }
 
-table.form td.help {
-    font-size: 10pt;
-    width: 40%;
-    padding-left: 10px;
-}
+ table.form td.help {
+     font-size: 10pt;
+     width: 40%;
+     padding-left: 10px;
+ }
 
-table.form td {
-    vertical-align: top;
-    border-bottom: 1px #eee solid;
-}
+ table.form td {
+     vertical-align: top;
+     border-bottom: 1px #eee solid;
+ }
 
-table.calendar {
-    width: 90%;
-    margin: 0 auto;
-}
+ table.calendar {
+     width: 90%;
+     margin: 0 auto;
+ }
 
-table.calendar td {
-    height: 6em;
-    vertical-align: top;
-    width: 14%;
-    text-align: left;
-    color: #444444;
-    padding: 2px;
-    -moz-border-radius: 5px;
-    -webkit-border-radius: 5px;
-    border-radius: 5px;
-    border: 1px solid #fff;
-}
+ table.calendar td {
+     height: 6em;
+     vertical-align: top;
+     width: 14%;
+     text-align: left;
+     color: #444444;
+     padding: 2px;
+     -moz-border-radius: 5px;
+     -webkit-border-radius: 5px;
+     border-radius: 5px;
+     border: 1px solid #fff;
+ }
 
-table.calendar ul {
-    margin: 0;
-    padding: 0;
-}
+ table.calendar ul {
+     margin: 0;
+     padding: 0;
+ }
 
-table.calendar li.region {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-}
+ table.calendar li.region {
+     list-style: none;
+     margin: 0;
+     padding: 0;
+ }
 
-table.calendar td:hover {
-    border: 1px solid #8bbfda;
-}
+ table.calendar td:hover {
+     border: 1px solid #8bbfda;
+ }
 
-table.calendar td ul {
-    font-size: 10pt;
-    padding-left: 5px;
-    margin: 0;
-}
+ table.calendar td ul {
+     font-size: 10pt;
+     padding-left: 5px;
+     margin: 0;
+ }
 
-table.calendar .region {
-    color: #aaa;
-    font-size: 8pt;
-    line-height: 8pt;
-}
+ table.calendar .region {
+     color: #aaa;
+     font-size: 8pt;
+     line-height: 8pt;
+ }
 
-table.calendar td ul li {
-    margin: 0 0 5px 0;
-    padding: 0 0 0 0;
-    line-height: 1.1em;
-    margin-left: 15px;
-}
-
-
-/*
+ table.calendar td ul li {
+     margin: 0 0 5px 0;
+     padding: 0 0 0 0;
+     line-height: 1.1em;
+     margin-left: 15px;
+ }
+ /*
  * These attributes apply to the cells that correspond to the days
  * already past in the current month.
  */
 
-td.past_month {
-    background: #c7e0ed;
-}
-
-
-/*
+ td.past_month {
+     background: #c7e0ed;
+ }
+ /*
  * These attributes apply to the cells that correspond to the future
  * days in the current month.
  */
 
-td.current_month {
-    background: #e5f6ff;
-    /*e0faff--e6fbff--e5f6ff*/
-}
-
-
-/*
+ td.current_month {
+     background: #e5f6ff;
+     /*e0faff--e6fbff--e5f6ff*/
+ }
+ /*
  * These attributes apply to the cell corresponding to the current day
  */
 
-td.today {
-    background: #ffffdf;
-}
-
-
-/*
+ td.today {
+     background: #ffffdf;
+ }
+ /*
  * These attributes apply to the cells that correspond to days in the
  * previous or next month of the current month
  */
 
-td.other_month {
-    background: #eeeeee;
-}
+ td.other_month {
+     background: #eeeeee;
+ }
 
-td.label {
-    vertical-align: top;
-}
+ td.label {
+     vertical-align: top;
+ }
 
-.errorlist {
-    color: red;
-    font-weight: bold;
-}
+ .errorlist {
+     color: red;
+     font-weight: bold;
+ }
 
-p.error {
-    color: red;
-    font-weight: bold;
-}
-
-
-/*
+ p.error {
+     color: red;
+     font-weight: bold;
+ }
+ /*
  * Advises for event submission. (used only in submit.php)
  */
 
-#advises {
-    background-color: #e5f6ff;
-    margin: 0 100px 20px 100px;
-    padding-left: 10px;
-    padding-right: 10px;
-    -moz-border-radius: 10px;
-    -webkit-border-radius: 10px;
-    border: 1px solid #b3e5ff;
-}
+ #advises {
+     background-color: #e5f6ff;
+     margin: 0 100px 20px 100px;
+     padding-left: 10px;
+     padding-right: 10px;
+     -moz-border-radius: 10px;
+     -webkit-border-radius: 10px;
+     border: 1px solid #b3e5ff;
+ }
 
-#advises h1 {
-    font-family: Verdana, Arial, Helvetica, sans-serif;
-    color: #5d6064;
-}
-
-
-/*
+ #advises h1 {
+     font-family: 'Dosis', sans-serif;
+     color: #5d6064;
+ }
+ /*
  * Statistics (used only by list.php)
  */
 
-table.list {
-    width: 60%;
-}
+ table.list {
+     width: 60%;
+ }
 
-table.list tr.odd td {
-    background-color: #cae9ff;
-}
+ table.list tr.odd td {
+     background-color: #cae9ff;
+ }
 
-table.list tr.even td {
-    background-color: #b9d8ff;
-}
+ table.list tr.even td {
+     background-color: #b9d8ff;
+ }
 
-table.list td.item {
-    width: 60%;
-    text-align: left;
-}
+ table.list td.item {
+     width: 60%;
+     text-align: left;
+ }
 
-table.list td,
-th {
-    padding: 5px;
-    -moz-border-radius: 2px;
-    -webkit-border-radius: 2px;
-    text-align: center;
-}
+ table.list td,
+ th {
+     padding: 5px;
+     -moz-border-radius: 2px;
+     -webkit-border-radius: 2px;
+     text-align: center;
+ }
 
-table.list td.value {
-    text-align: right;
-}
+ table.list td.value {
+     text-align: right;
+ }
 
-b.date {
-    font-size: 12pt;
-}
+ b.date {
+     font-size: 12pt;
+ }
 
-.not-important {
-    font-size: 10pt;
-}
+ .not-important {
+     font-size: 10pt;
+ }
 
-#subtitle {
-    margin-top: 0;
-}
+ #subtitle {
+     margin-top: 0;
+ }
 
-form#filter {
-    text-align: center;
-}
+ form#filter {
+     text-align: center;
+ }
 
-img#arrow {
-    border: 0px;
-    margin: 0 10px 0 10px;
-    vertical-align: middle;
-}
+ img#arrow {
+     border: 0px;
+     margin: 0 10px 0 10px;
+     vertical-align: middle;
+ }
 
-img#arrow a,
-img#arrow a:visited {
-    border: 0;
-}
+ img#arrow a,
+ img#arrow a:visited {
+     border: 0;
+ }
 
-input#id_url,
-input#id_tags,
-textarea#id_description,
-input#id_title {
-    width: 100%;
-}
+ input#id_url,
+ input#id_tags,
+ textarea#id_description,
+ input#id_title {
+     width: 100%;
+ }
 
-input#id_venue,
-input#id_contact,
-input#id_contact_email,
-input#id_address,
-input#id_submiter_email {
-    width: 75%;
-}
+ input#id_venue,
+ input#id_contact,
+ input#id_contact_email,
+ input#id_address,
+ input#id_submiter_email {
+     width: 75%;
+ }
 
-h1 a {
-    text-decoration: none;
-}
-
-
-/******************************************
+ h1 a {
+     text-decoration: none;
+ }
+ /******************************************
  **** MAIN ACCORD PERSONALISATIONS ********/
-
-
-/*
+ /*
  * Home page
  */
 
-body.home-page {
-    margin: 0;
-    padding: 0;
-    background: url(/media/img/accueil-image-de-fond.jpg) no-repeat center fixed;
-    -webkit-background-size: cover;
-    /* pour anciens Chrome et Safari */
-    background-size: cover;
-    /* version standardisée */
-}
+ body.home-page {
+     margin: 0;
+     padding: 0;
+     background: url(/media/img/accueil-image-de-fond.jpg) no-repeat center fixed;
+     -webkit-background-size: cover;
+     /* pour anciens Chrome et Safari */
+     background-size: cover;
+     /* version standardisée */
+ }
 
-body.home-page div.header,
-body.home-page h1,
-body.home-page div.main {
-    background: none;
-}
+ body.home-page div.header,
+ body.home-page h1,
+ body.home-page div.main {
+     background: none;
+ }
 
-body.home-page h1 a {
-    background: rgba(255, 255, 255, .7);
-    padding: 6px;
-}
+ body.home-page h1 a {
+     background: rgba(255, 255, 255, .7);
+     padding: 6px;
+ }
 
-body.home-page div.footer {
-    background: rgba(255, 255, 255, .7);
-    padding: 6px;
-}
-
-
-/*
+ body.home-page div.footer {
+     background: rgba(255, 255, 255, .7);
+     padding: 6px;
+ }
+ /*
  * Home page > Carte
  */
 
-#homepage-carte-container {
-    margin: auto;
-    margin-top: 20px;
-    max-width: 700px;
-    background: rgba(255, 255, 255, .7);
-}
+ #homepage-carte-container {
+     margin: auto;
+     margin-top: 20px;
+     max-width: 700px;
+     background: rgba(255, 255, 255, .7);
+ }
 
-#homepage-carte-container {
-    position: relative;
-}
+ #homepage-carte-container {
+     position: relative;
+ }
 
-#homepage-carte-container img {
-    width: 100%;
-    max-height: 100%;
-    /* border: 1px solid black; */
-}
+ #homepage-carte-container img {
+     width: 100%;
+     max-height: 100%;
+     /* border: 1px solid black; */
+ }
 
-#homepage-carte-container a {
-    position: absolute;
-    text-decoration: none;
-    font-size: 1.5em;
-    padding: 10px;
-    color: black;
-}
+ #homepage-carte-container a {
+     position: absolute;
+     text-decoration: none;
+     font-size: 1.5em;
+     padding: 10px;
+     color: black;
+ }
 
-#homepage-carte-nord {
-    top: 27%;
-    left: 40%;
-}
+ #homepage-carte-nord {
+     top: 27%;
+     left: 40%;
+ }
 
-#homepage-carte-est-erdre {
-    top: 37%;
-    left: 62%;
-}
+ #homepage-carte-est-erdre {
+     top: 37%;
+     left: 62%;
+ }
 
-#homepage-carte-centre-sud {
-    top: 60%;
-    left: 40%;
-}
+ #homepage-carte-centre-sud {
+     top: 60%;
+     left: 40%;
+ }
 
-#homepage-carte-ouest {
-    top: 67%;
-    left: 21%;
-}
+ #homepage-carte-ouest {
+     top: 67%;
+     left: 21%;
+ }
 
-@media screen and (max-width: 560px) {
-    /* recenter links */
-    #homepage-carte-container a {
-        font-size: 1.2em;
-    }
-    #homepage-carte-nord {
-        top: 27%;
-        left: 38%;
-    }
-    #homepage-carte-est-erdre {
-        top: 37%;
-        left: 60%;
-    }
-    #homepage-carte-centre-sud {
-        top: 56%;
-        left: 38%;
-    }
-    #homepage-carte-ouest {
-        top: 65%;
-        left: 19%;
-    }
-}
-
-
-/*
+ @media screen and (max-width: 560px) {
+     /* recenter links */
+     #homepage-carte-container a {
+         font-size: 1.2em;
+     }
+     #homepage-carte-nord {
+         top: 27%;
+         left: 38%;
+     }
+     #homepage-carte-est-erdre {
+         top: 37%;
+         left: 60%;
+     }
+     #homepage-carte-centre-sud {
+         top: 56%;
+         left: 38%;
+     }
+     #homepage-carte-ouest {
+         top: 65%;
+         left: 19%;
+     }
+ }
+ /*
  * Home page > Par quartier et équipement
  */
 
-#homepage-quartier-equipements-container {
-    margin: auto;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    max-width: 700px;
-    background: rgba(255, 255, 255, .7);
-    text-align: left;
-}
+ #homepage-quartier-equipements-container {
+     margin: auto;
+     padding-top: 5px;
+     padding-bottom: 5px;
+     max-width: 700px;
+     background: rgba(255, 255, 255, .7);
+     text-align: left;
+ }
 
-#homepage-quartier-equipements-container div {
-    padding: 10px;
-    margin: 10px;
-    color: black;
-}
+ #homepage-quartier-equipements-container div {
+     padding: 10px;
+     margin: 10px;
+     color: black;
+ }
 
-#homepage-quartier-equipements-container div a {
-    color: black;
-}
+ #homepage-quartier-equipements-container div a {
+     color: black;
+ }
+ /* Centre-Sud color */
 
+ #homepage-quartier-equipements-container div.grand-quartier-0 {
+     background-color: rgba(174, 57, 138, .4);
+ }
+ /* Ouest color */
 
-/* Centre-Sud color */
+ #homepage-quartier-equipements-container div.grand-quartier-1 {
+     background-color: rgba(245, 166, 42, .4);
+ }
+ /* Nord color */
 
-#homepage-quartier-equipements-container div.grand-quartier-0 {
-    background-color: rgba(174, 57, 138, .4);
-}
+ #homepage-quartier-equipements-container div.grand-quartier-2 {
+     background-color: rgba(227, 32, 77, .4);
+ }
+ /* Est-Erdre color */
 
-
-/* Ouest color */
-
-#homepage-quartier-equipements-container div.grand-quartier-1 {
-    background-color: rgba(245, 166, 42, .4);
-}
-
-
-/* Nord color */
-
-#homepage-quartier-equipements-container div.grand-quartier-2 {
-    background-color: rgba(227, 32, 77, .4);
-}
-
-
-/* Est-Erdre color */
-
-#homepage-quartier-equipements-container div.grand-quartier-3 {
-    background-color: rgba(187, 199, 55, .4);
-}
-
-
-/*
+ #homepage-quartier-equipements-container div.grand-quartier-3 {
+     background-color: rgba(187, 199, 55, .4);
+ }
+ /*
  * Personnalisation du calendrier par grand-quartier
  */
+ /* Centre-Sud color */
 
+ .grand-quartier-0 h1 a {
+     color: #ae398a;
+ }
+ /* Ouest color */
 
-/* Centre-Sud color */
+ .grand-quartier-1 h1 a {
+     color: #f5a62a;
+ }
+ /* Nord color */
 
-.grand-quartier-0 h1 a {
-    color: #ae398a;
-}
+ .grand-quartier-2 h1 a {
+     color: #e3204d;
+ }
+ /* Est-Erdre color */
 
+ .grand-quartier-3 h1 a {
+     color: #bbc737;
+ }
 
-/* Ouest color */
+ td.current_month {
+     background: #fff69f;
+ }
 
-.grand-quartier-1 h1 a {
-    color: #f5a62a;
-}
+ td.today {
+     background: #ffed00;
+ }
+ /* Centre-Sud color */
 
+ .grand-quartier-0 td.past_month {
+     background: #f4e5ef;
+ }
+ /* Ouest color */
 
-/* Nord color */
+ .grand-quartier-1 td.past_month {
+     background: #ede0cc;
+ }
+ /* Nord color */
 
-.grand-quartier-2 h1 a {
-    color: #e3204d;
-}
+ .grand-quartier-2 td.past_month {
+     background: #f7bcc9;
+ }
+ /* Est-Erdre color */
 
+ .grand-quartier-3 td.past_month {
+     background: #eaeec3;
+ }
+ /* Alignement twitter & fb */
 
-/* Est-Erdre color */
-
-.grand-quartier-3 h1 a {
-    color: #bbc737;
-}
-
-td.current_month {
-    background: #fff69f;
-}
-
-td.today {
-    background: #ffed00;
-}
-
-
-/* Centre-Sud color */
-
-.grand-quartier-0 td.past_month {
-    background: #f4e5ef;
-}
-
-
-/* Ouest color */
-
-.grand-quartier-1 td.past_month {
-    background: #ede0cc;
-}
-
-
-/* Nord color */
-
-.grand-quartier-2 td.past_month {
-    background: #f7bcc9;
-}
-
-
-/* Est-Erdre color */
-
-.grand-quartier-3 td.past_month {
-    background: #eaeec3;
-}
-
-/* Alignement twitter & fb */
-.twitter-follow-button {
-	vertical-align:middle;
-}
+ .twitter-follow-button {
+     vertical-align: middle;
+ }
