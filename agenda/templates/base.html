@@ -9,6 +9,7 @@
         <title>{% trans "L'Agenda de l'Accoord" %}</title>
         {% endblock title %}
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <link href='https://fonts.googleapis.com/css?family=Dosis|Open+Sans' rel='stylesheet' type='text/css'>
         <meta name="google-site-verification" content="rz4d48R0H-Yiap5gO405faHZiTN-MiLNkkmlbhjsNSY" />
         <link rel="stylesheet" type="text/css" href="/media/moderne.css" title="Moderne" />
         <link rel="shortcut icon" type="image/x-icon" href="/media/img/favicon.png" /> {% block feeds %} {% endblock feeds %}
@@ -87,21 +88,21 @@
                     fjs.parentNode.insertBefore(js, fjs);
                 }(document, 'script', 'facebook-jssdk'));
             </script>
-	    <div class="fb-like" data-href="https://www.facebook.com/Accoord-Les-Vacances-Des-Nantais-444270362401231" data-layout="button" data-action="like" data-show-faces="true" data-share="true"></div>
-	    <!-- Twitter button -->
-	   &nbsp;&nbsp;<a href="https://twitter.com/AccoordNantes" class="twitter-follow-button" data-show-screen-name="false" data-show-count="false">Follow @AccoordNantes</a></div>
-            <script>
-                ! function (d, s, id) {
-                    var js, fjs = d.getElementsByTagName(s)[0],
-                        p = /^http:/.test(d.location) ? 'http' : 'https';
-                    if (!d.getElementById(id)) {
-                        js = d.createElement(s);
-                        js.id = id;
-                        js.src = p + '://platform.twitter.com/widgets.js';
-                        fjs.parentNode.insertBefore(js, fjs);
-                    }
-                }(document, 'script', 'twitter-wjs');
-            </script>
+            <div class="fb-like" data-href="https://www.facebook.com/Accoord-Les-Vacances-Des-Nantais-444270362401231" data-layout="button" data-action="like" data-show-faces="true" data-share="true"></div>
+            <!-- Twitter button -->
+            &nbsp;&nbsp;<a href="https://twitter.com/AccoordNantes" class="twitter-follow-button" data-show-screen-name="false" data-show-count="false">Follow @AccoordNantes</a></div>
+        <script>
+            ! function (d, s, id) {
+                var js, fjs = d.getElementsByTagName(s)[0],
+                    p = /^http:/.test(d.location) ? 'http' : 'https';
+                if (!d.getElementById(id)) {
+                    js = d.createElement(s);
+                    js.id = id;
+                    js.src = p + '://platform.twitter.com/widgets.js';
+                    fjs.parentNode.insertBefore(js, fjs);
+                }
+            }(document, 'script', 'twitter-wjs');
+        </script>
         </div>
         {% block before_end_body %}{% endblock %}
     </body>
