@@ -79,10 +79,7 @@ class Event (models.Model):
 
   description = models.TextField(verbose_name="Description",
                                  blank=True, null=True,
-                                 help_text="""Décrivez de la manière la plus complète possible votre événement.
-                                 Les balises HTML autorisées sont &lt;p&gt;, &lt;b&gt;, &lt;i&gt;, &lt;ul&gt;, &lt;ol&gt;, &lt;li&gt;, &lt;br/&gt;, &lt;a&gt;. Utilisez &lt;h3&gt; jusqu'à &lt;h5&gt; pour diviser votre texte au besoin. Merci d'utiliser ces balises pour formater la description de votre événement. <br/>
-Veillez à utiliser les balises &lt;p&gt; pour formater les paragraphes, et non la balise &lt;br/&gt;.<br/>
-Pour formater le texte, la balise doit l'encadrer. Par exemple écrire '&lt;b&gt;ce texte en gras&lt;/b&gt;' donnera <b>ce texte en gras</b>. """)
+                                 help_text="""Décrivez de la manière la plus complète possible votre événement.""")
 
   url = models.URLField(verbose_name="site web",
                         blank=True, null=True,
