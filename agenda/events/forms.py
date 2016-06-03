@@ -83,6 +83,12 @@ class EventForm(forms.ModelForm):
         if not settings.RECAPTCHA_ENABLE:
             del self.fields['captcha']
 
+        # Set start_time and end_time to today
+        today = datetime.now().date()
+        today_datetime = datetime.combine(today, datetime.min.time())
+        self.fields['start_time'].initial = today_datetime
+        self.fields['end_time'].initial = today_datetime
+
     def clean(self):
         cleaned_data = self.cleaned_data
         start_time = cleaned_data.get("start_time")
