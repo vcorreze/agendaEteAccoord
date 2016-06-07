@@ -44,7 +44,7 @@ from django.conf import settings
 @login_required
 def propose(request, template_name="events/event_new.html"):
     if request.method == "POST":
-        form = EventForm(request.POST)
+        form = EventForm(request.POST, request.FILES)
         if form.is_valid():
             e = form.save()
             moderator = e.city.region.moderator
@@ -75,7 +75,7 @@ def edit(request, event_id, template_name="events/event_edit.html"):
         raise PermissionDenied()
 
     if request.method == "POST":
-        form = EventForm(request.POST, instance=event)
+        form = EventForm(request.POST, request.FILES, instance=event)
         if form.is_valid():
             e = form.save()
             return HttpResponseRedirect(reverse("event_detail", args=[event_id]))

@@ -69,6 +69,14 @@ class EventForm(forms.ModelForm):
         label="Équipement"
     )
 
+    image = forms.ImageField(
+        label="Image",
+        help_text="Image qui s'affichera sous la description. L'image sera affichée sans "
+                  "redimentionnement automatique, merci de l'optimiser au préalable pour "
+                  "un affichage web.",
+        widget=forms.ClearableFileInput, required=False
+    )
+
     captcha = ReCaptchaField(attrs={'theme': 'clean'})
 
     class Meta:

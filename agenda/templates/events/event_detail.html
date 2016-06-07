@@ -56,6 +56,10 @@
   <div>{% autoescape off %} {{ event.description }} {% endautoescape %}</div>
 {% endif %}
 
+{% if event.image %}
+  <img title="{{ event.title }}" alt="{{ event.title }}" src="{{ event.image.url }}" />
+{% endif %}
+
 <h3>{% trans "Informations" %}</h3>
 
 {% if event.url %}

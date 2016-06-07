@@ -51,6 +51,7 @@ class Region (models.Model):
   def __unicode__ (self):
     return self.name
 
+
 class City (models.Model):
 
   class Meta:
@@ -68,7 +69,9 @@ class City (models.Model):
   def __unicode__ (self):
     return self.name
 
+
 class Event (models.Model):
+
   class Meta:
     verbose_name = "événement"
 
@@ -81,10 +84,17 @@ class Event (models.Model):
                                  blank=True, null=True,
                                  help_text="""Décrivez de la manière la plus complète possible votre événement.""")
 
+  image = models.ImageField(verbose_name="Image",
+                            upload_to='event_images',
+                            blank=True, null=True,
+                            help_text='')
+
   url = models.URLField(verbose_name="site web",
                         blank=True, null=True,
                         help_text="Lien direct vers une page donnant plus d'informations sur l'événement (lieu précis, horaire précis, programme précis...)")
+
   tags = TagField(help_text="Une liste de mots séparés par un espace. Ne pas mettre de lieu dans les tags. <br/>Exemple: sortie cinéma")
+
   start_time = models.DateTimeField()
   end_time = models.DateTimeField(blank=True, null=True)
 
@@ -102,6 +112,7 @@ class Event (models.Model):
   city = models.ForeignKey(City, blank=True, null=True,
                            verbose_name="Équipement",
                            help_text="<b>N'oubliez-pas de choisir l'équipement concerné</b>")
+
   latitude = models.FloatField(blank=True, null=True, default=0)
   longitude = models.FloatField(blank=True, null=True, default=0)
 
@@ -118,6 +129,7 @@ class Event (models.Model):
                                 help_text="Voulez-vous que l'Agenda publie votre événement sur Twitter?")
 
   moderator = models.ForeignKey(User, blank=True, null=True, related_name="moderated_events")
+
   moderated = models.BooleanField(default=False)
   announced = models.BooleanField(default=False)
 

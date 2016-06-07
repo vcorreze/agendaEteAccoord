@@ -22,4 +22,9 @@ etc
 var
 agenda/production.py
 agenda/development.py
+
+# Development database
 agendadulibre.sqlite
+
+# Images uploaded by users on events
+agenda/media/event_images
