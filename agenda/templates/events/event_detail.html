@@ -5,10 +5,12 @@
 
 {% block title %}<title>{{ event.title }}</title>{% endblock title %}
 
+{% block bodyclass %}grand-quartier-{{ event.city.region.pk }}{% endblock bodyclass %}
+
 {% block content %}
 <div id="event-page">
 
-<h2>{{ event.title }}</h2>
+<h2>{% if event.global_event %}<img src="/media/img/icon-globe.png" style="width:20px" title="Portée globale" /> </a>{% endif %}{{ event.title }}</h2>
 
 {% if user.is_authenticated and user == event.city.region.moderator %}
   <h3 class="no-print">

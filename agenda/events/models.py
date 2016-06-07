@@ -18,6 +18,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 from django.db import models
+from django.db.models import Q
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.conf import settings
@@ -116,6 +117,11 @@ class Event (models.Model):
   latitude = models.FloatField(blank=True, null=True, default=0)
   longitude = models.FloatField(blank=True, null=True, default=0)
 
+  # A global event is displayed in all calendars for all equipements and regions
+  global_event = models.BooleanField(verbose_name="Portée globale",
+                                     default=False,
+                                     help_text="Un événement de portée globale sera affiché dans tous les agendas.")
+
   contact = models.CharField(max_length=200,
                              verbose_name="Personne ressource",
                              help_text="Entrez le nom d'une personne que les visiteurs peuvent contacter pour plus d'information")
@@ -208,6 +214,30 @@ class Event (models.Model):
 
   def get_absolute_url (self):
     return "/event/%i/" % self.id
+
+  @staticmethod
+  def get_moderated_events(start_day, end_day, region=None, city=None):
+      # Filter events for given region/city, include global events
+
+      if region is not None:
+          if city is not None:
+              q = Q(city__region=region, city=city)
+          else:
+              q = Q(city__region=region)
+      else:
+          q = Q()
+
+      # Include global events
+      q = q | Q(global_event=True)
+
+      event_list = (Event.objects
+                    .filter(start_time__gte=start_day)
+                    .filter(end_time__lte=end_day)
+                    .filter(moderated=True)
+                    .filter(q))
+
+      return event_list
+
 
 post_save.connect(Event.geocode, sender=Event, dispatch_uid="geocode_event")
 post_save.connect(Event.announce, sender=Event, dispatch_uid="announce_event")

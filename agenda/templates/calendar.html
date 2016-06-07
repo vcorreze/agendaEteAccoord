@@ -12,13 +12,15 @@
         {% if day.events %}
           <ul>
           {% for event in day.events %}
-            <li><a href="/event/{{ event.id }}/">{{ event.title }}</a>
-            {% if not region %}
-                <br/><span class="region">{{ event.city.region }}</span>
-            {% endif %}
-            {% if not city %}
-                <br/><span class="region">{{ event.city }}</span>
-            {% endif %}
+            <li>
+              {% if event.global_event %}<img class="globe-icon" src="/media/img/icon-globe.png" title="Portée globale" /> </a>{% endif %}
+              <a href="/event/{{ event.id }}/">{{ event.title }}</a>
+              {% if not region %}
+                  <br/><span class="region">{{ event.city.region }}</span>
+              {% endif %}
+              {% if not city %}
+                  <br/><span class="region">{{ event.city }}</span>
+              {% endif %}
             </li>
           {% endfor %}
           </ul>

@@ -159,6 +159,10 @@ table.calendar {
     margin: 0 auto;
 }
 
+table.calendar img.globe-icon {
+    width: 13px;
+}
+
 table.calendar td {
     height: 6em;
     vertical-align: top;

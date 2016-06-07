@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 #
 # Copyright (C) 2009 Novopia Solutions Inc.
 #
@@ -24,7 +25,6 @@ from datetime import date, timedelta
 
 from django import template
 from agenda.events.models import Event
-from django.db.models import Q
 
 register = template.Library()
 
@@ -50,21 +50,14 @@ def month_cal(year, month, region=None, city=None):
     # print last_day_of_month.isoweekday()
     today = date.today()
 
-    # Filter local events for given region/city, include national and
-    # international events
-    if region is not None:
-        if city is not None:
-            q = Q(city__region=region, city=city)
-        else:
-            q = Q(city__region=region)
-    else:
-        q = Q()
+    # Filter events for given region/city, include global events
+    event_list = Event.get_moderated_events(
+        first_day_of_calendar,
+        last_day_of_calendar,
+        region=region,
+        city=city
+    )
 
-    event_list = (Event.objects
-                  .filter(start_time__gte=first_day_of_calendar)
-                  .filter(end_time__lte=last_day_of_calendar)
-                  .filter(moderated=True)
-                  .filter(q))
     month_cal = []
     week = []
     week_headers = []
