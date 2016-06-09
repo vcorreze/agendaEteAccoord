@@ -1,13 +1,23 @@
+{% load calendar %}
+
 <table class="calendar">
   <tr>
-  {% for day in headers %}
-    <th>{{ day|date:"l" }}</th>
-  {% endfor %}
+    <th>&nbsp;</th>
+    {% for day in headers %}
+      <th>{{ day|date:"l" }}</th>
+    {% endfor %}
   </tr>
   {% for week in calendar %}
   <tr>
+    <td style="border:none">
+      {% if city %}
+        {% print_week_link week_bounds forloop.counter0 region city %}
+      {% else %}
+        {% print_week_link week_bounds forloop.counter0 region %}
+      {% endif %}
+    </td>
     {% for day in week %}
-    <td class="{% if day.in_month %}{% if day.is_past %}past_month{% else %}current_month{% endif %}{% else %}other_month{% endif %} {% if day.is_today %}today{% endif %}">
+    <td class="day {% if day.in_month %}{% if day.is_past %}past_month{% else %}current_month{% endif %}{% else %}other_month{% endif %} {% if day.is_today %}today{% endif %}">
         <div id="day">{{ day.day|date:"j" }}</div>
         {% if day.events %}
           <ul>

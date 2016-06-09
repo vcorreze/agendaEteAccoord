@@ -81,6 +81,11 @@ urlpatterns = patterns(
     url(r"^(?P<year>\d+)/(?P<month>\d+)/$", "agenda.events.views.month",
         name="month_view"),
 
+    url(r"^print_week/(?P<start_year>\d+)/(?P<start_month>\d+)/(?P<start_day>\d+)/region/(?P<region_id>\d+)/$", "agenda.events.views.print_week",
+        name="print_week_region"),
+    url(r"^print_week/(?P<start_year>\d+)/(?P<start_month>\d+)/(?P<start_day>\d+)/region/(?P<region_id>\d+)/city/(?P<city_id>\d+)/$", "agenda.events.views.print_week",
+        name="print_week_city"),
+
     url(r"^stats/$", "agenda.events.views.stats", name="stats"),
 
     url(r"^feeds/$", "agenda.events.views.feed_list", name="feed_list"),

@@ -159,11 +159,16 @@ table.calendar {
     margin: 0 auto;
 }
 
+table.calendar img.print-icon {
+    width: 22px;
+    padding-right: 3px;
+}
+
 table.calendar img.globe-icon {
     width: 13px;
 }
 
-table.calendar td {
+table.calendar td.day {
     height: 6em;
     vertical-align: top;
     width: 14%;

@@ -24,6 +24,8 @@
 from datetime import date, timedelta
 
 from django import template
+from django.core.urlresolvers import reverse
+from django.utils.html import format_html
 from agenda.events.models import Event
 
 register = template.Library()
@@ -61,6 +63,7 @@ def month_cal(year, month, region=None, city=None):
     month_cal = []
     week = []
     week_headers = []
+    week_bounds = []
 
     i = 0
     day = first_day_of_calendar
@@ -86,12 +89,48 @@ def month_cal(year, month, region=None, city=None):
         week.append(cal_day)
 
         if day.weekday() == 6:
+            first_day, last_day = week[0]['day'], week[-1]['day']
+            week_bounds.append({
+                'start': first_day,
+                'end': last_day
+            })
             month_cal.append(week)
             week = []
 
         i += 1
         day += timedelta(1)
 
-    return {'calendar': month_cal, 'headers': week_headers, 'region': region}
+    return {
+        'calendar': month_cal,
+        'headers': week_headers,
+        'week_bounds': week_bounds,
+        'region': region,
+        'city': city
+    }
 
 register.inclusion_tag('calendar.html')(month_cal)
+
+
+@register.simple_tag
+def print_week_link(week_bounds, index, region, city=None):
+    # week_bounds: see the mont_cal template tag
+    # index: the week to use
+    start_day = week_bounds[index]['start']
+
+    if city is not None:
+        href = reverse(
+            'print_week_city',
+            args=[start_day.year, start_day.month, start_day.day, region.id, city.id]
+        )
+    else:
+        href = reverse(
+            'print_week_region',
+            args=[start_day.year, start_day.month, start_day.day, region.id]
+        )
+
+    return format_html(
+        '<a href="{}" target="_blank">'
+        '<img class="print-icon" src="/media/img/icon-print.png" title="Imprimer les événements de la semaine" />'
+        '</a>',
+        href
+    )
