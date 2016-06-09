@@ -52,6 +52,26 @@ EVENT_ITEMS = (
 )
 
 
+def add_alert_for_start_end_hour(description, start_time, end_time):
+    """ Add an alerte if start or end hour is not provided """
+    alert = ''
+
+    has_start_hour = not (start_time.hour == 0 and start_time.minute == 0)
+    has_end_hour = not (end_time.hour == 0 and end_time.minute == 0)
+
+    if not has_start_hour and not has_end_hour:
+        alert = u"Attention : L'heure de début et de fin de cet événement n'est pas encore confirmée."
+    elif not has_start_hour:
+        alert = u"Attention : L'heure de début de cet événement n'est pas encore confirmée."
+    elif not has_end_hour:
+        alert = u"Attention : L'heure de fin de cet événement n'est pas encore confirmée."
+
+    if alert:
+        description = alert + u'\n\n' + description
+
+    return description
+
+
 class ICalendarFeed(object):
 
     def __call__(self, *args, **kwargs):
@@ -151,7 +171,9 @@ class UpcomingEventCalendar(ICalendarFeed):
         return item.address + ", " + item.city.name
 
     def item_description(self, item):
-        return remove_html_tags(item.description)
+        description = remove_html_tags(item.description)
+        description = add_alert_for_start_end_hour(description, item.start_time, item.end_time)
+        return description
 
     def item_url(self, item):
         return item.url
@@ -200,8 +222,10 @@ class UpcomingEventCalendarByRegion (ICalendarFeed):
                 + item.city.region.name)
 
     def item_description(self, item):
-        return remove_html_tags(item.description)
-
+        description = remove_html_tags(item.description)
+        description = add_alert_for_start_end_hour(description, item.start_time, item.end_time)
+        return description
+        
     def item_url(self, item):
         return item.url
 
@@ -218,6 +242,11 @@ class LatestEntries(Feed):
 
     def item_pubdate(self, item):
         return item.start_time
+
+    def item_description(self, item):
+        description = remove_html_tags(item.description)
+        description = add_alert_for_start_end_hour(description, item.start_time, item.end_time)
+        return description
 
 
 class LatestEntriesByRegion(LatestEntries):
