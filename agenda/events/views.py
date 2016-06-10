@@ -222,7 +222,8 @@ def month(request, year, month,
         "form": form,
         "region": region,
         "city": city,
-        "regions": Region.objects.all()
+        "regions": Region.objects.all(),
+        "view_type": request.GET.get('view_type', 'calendar')  # 'calendar' or 'map'
     })
 
 

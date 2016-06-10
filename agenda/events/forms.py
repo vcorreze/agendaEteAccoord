@@ -151,7 +151,7 @@ class RegionFilterForm(forms.Form):
         widget=forms.Select(
             attrs={
                 # "onchange":"document.getElementById('filter').submit();"
-                "style": "visibility: hidden"
+                "style": "display: none"
             }
         )
     )

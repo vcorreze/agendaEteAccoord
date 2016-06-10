@@ -339,6 +339,13 @@ form#filter {
     text-align: center;
 }
 
+form#filter a.view-link {
+    white-space: nowrap;
+}
+form#filter a.view-link img {
+    margin-bottom: -4px;
+}
+
 img#arrow {
     border: 0px;
     margin: 0 10px 0 10px;

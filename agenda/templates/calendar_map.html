@@ -1,0 +1,11 @@
+<div id="eventsmap" style="width:90%; min-height:500px; margin:auto;"></div>
+
+<script type="text/javascript">
+(function() {
+  // the DOM is available here
+
+  var features = {{ features|safe }};
+  initialize_map('eventsmap', features);
+
+})();
+</script>
