@@ -18,6 +18,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 from django.db import models
+from django.db.models import Q
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.conf import settings
@@ -51,6 +52,7 @@ class Region (models.Model):
   def __unicode__ (self):
     return self.name
 
+
 class City (models.Model):
 
   class Meta:
@@ -68,7 +70,9 @@ class City (models.Model):
   def __unicode__ (self):
     return self.name
 
+
 class Event (models.Model):
+
   class Meta:
     verbose_name = "événement"
 
@@ -79,15 +83,19 @@ class Event (models.Model):
 
   description = models.TextField(verbose_name="Description",
                                  blank=True, null=True,
-                                 help_text="""Décrivez de la manière la plus complète possible votre événement.
-                                 Les balises HTML autorisées sont &lt;p&gt;, &lt;b&gt;, &lt;i&gt;, &lt;ul&gt;, &lt;ol&gt;, &lt;li&gt;, &lt;br/&gt;, &lt;a&gt;. Utilisez &lt;h3&gt; jusqu'à &lt;h5&gt; pour diviser votre texte au besoin. Merci d'utiliser ces balises pour formater la description de votre événement. <br/>
-Veillez à utiliser les balises &lt;p&gt; pour formater les paragraphes, et non la balise &lt;br/&gt;.<br/>
-Pour formater le texte, la balise doit l'encadrer. Par exemple écrire '&lt;b&gt;ce texte en gras&lt;/b&gt;' donnera <b>ce texte en gras</b>. """)
+                                 help_text="""Décrivez de la manière la plus complète possible votre événement.""")
+
+  image = models.ImageField(verbose_name="Image",
+                            upload_to='event_images',
+                            blank=True, null=True,
+                            help_text='')
 
   url = models.URLField(verbose_name="site web",
                         blank=True, null=True,
                         help_text="Lien direct vers une page donnant plus d'informations sur l'événement (lieu précis, horaire précis, programme précis...)")
+
   tags = TagField(help_text="Une liste de mots séparés par un espace. Ne pas mettre de lieu dans les tags. <br/>Exemple: sortie cinéma")
+
   start_time = models.DateTimeField()
   end_time = models.DateTimeField(blank=True, null=True)
 
@@ -105,8 +113,14 @@ Pour formater le texte, la balise doit l'encadrer. Par exemple écrire '&lt;b&gt
   city = models.ForeignKey(City, blank=True, null=True,
                            verbose_name="Équipement",
                            help_text="<b>N'oubliez-pas de choisir l'équipement concerné</b>")
+
   latitude = models.FloatField(blank=True, null=True, default=0)
   longitude = models.FloatField(blank=True, null=True, default=0)
+
+  # A global event is displayed in all calendars for all equipements and regions
+  global_event = models.BooleanField(verbose_name="Portée globale",
+                                     default=False,
+                                     help_text="Un événement de portée globale sera affiché dans tous les agendas.")
 
   contact = models.CharField(max_length=200,
                              verbose_name="Personne ressource",
@@ -121,6 +135,7 @@ Pour formater le texte, la balise doit l'encadrer. Par exemple écrire '&lt;b&gt
                                 help_text="Voulez-vous que l'Agenda publie votre événement sur Twitter?")
 
   moderator = models.ForeignKey(User, blank=True, null=True, related_name="moderated_events")
+
   moderated = models.BooleanField(default=False)
   announced = models.BooleanField(default=False)
 
@@ -199,6 +214,30 @@ Pour formater le texte, la balise doit l'encadrer. Par exemple écrire '&lt;b&gt
 
   def get_absolute_url (self):
     return "/event/%i/" % self.id
+
+  @staticmethod
+  def get_moderated_events(start_day, end_day, region=None, city=None):
+      # Filter events for given region/city, include global events
+
+      if region is not None:
+          if city is not None:
+              q = Q(city__region=region, city=city)
+          else:
+              q = Q(city__region=region)
+      else:
+          q = Q()
+
+      # Include global events
+      q = q | Q(global_event=True)
+
+      event_list = (Event.objects
+                    .filter(start_time__gte=start_day)
+                    .filter(end_time__lte=end_day)
+                    .filter(moderated=True)
+                    .filter(q))
+
+      return event_list
+
 
 post_save.connect(Event.geocode, sender=Event, dispatch_uid="geocode_event")
 post_save.connect(Event.announce, sender=Event, dispatch_uid="announce_event")

@@ -12,10 +12,12 @@
         <link href='https://fonts.googleapis.com/css?family=Dosis|Open+Sans' rel='stylesheet' type='text/css'>
 	<meta name="google-site-verification" content="ixm0aqViaTFbKa4yUHBEI-xE0gRiLHLWGmLg7fEd8cE" />
         <link rel="stylesheet" type="text/css" href="/media/moderne.css" title="Moderne" />
+        <link rel="stylesheet" type="text/css" href="/media/print.css" media="print" />
         <link rel="shortcut icon" type="image/x-icon" href="/media/img/favicon.png" /> {% block feeds %} {% endblock feeds %}
         <link rel="alternate" href="/event/feeds/latest/" title="{% trans " L 'Agenda de l'Accoord, nouveaux événements " %}" type="application/rss+xml" />
         <link rel="alternate" href="/event/feeds/upcoming/" title="{% trans " L 'Agenda de l'Accoord, prochains événements " %}" type="application/rss+xml" />
         <link rel="alternate" href="/event/calendar/" title="{% trans " L 'Agenda de l'Accoord, calendrier numérique " %}" type="text/calendar" />
+        {% block extrahead %}{% endblock extrahead %}
     </head>
 
     <body class="{% block bodyclass %}{% endblock bodyclass %}">

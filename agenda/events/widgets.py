@@ -64,7 +64,7 @@ class SelectTimeWidget(Widget):
     """
     hour_field = '%s_hour'
     minute_field = '%s_minute'
-    second_field = '%s_second' 
+    second_field = '%s_second'
     meridiem_field = '%s_meridiem'
     twelve_hr = False # Default to 24hr.
 
@@ -114,7 +114,7 @@ class SelectTimeWidget(Widget):
                 if match:
                     time_groups = match.groups();
                     hour_val = int(time_groups[HOURS]) % 24 # force to range(0-24)
-                    minute_val = int(time_groups[MINUTES]) 
+                    minute_val = int(time_groups[MINUTES])
                     if time_groups[SECONDS] is None:
                         second_val = 0
                     else:
@@ -138,8 +138,9 @@ class SelectTimeWidget(Widget):
         if self.twelve_hr and self.meridiem_val:
             if self.meridiem_val.lower().startswith('p') and hour_val > 12 and hour_val < 24:
                 hour_val = hour_val % 12
-        elif hour_val == 0:
-            hour_val = 12
+        # Accoord - Let the default value to 0
+        #elif hour_val == 0:
+        #    hour_val = 12
 
         output = []
         if 'id' in self.attrs:

@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% load humanize %}
+{% load humantime %}
+{% load i18n %}
+
+
+{% block bodyclass %}grand-quartier-{{ region.pk }}{% endblock bodyclass %}
+
+{% block content %}
+<div id="events-week-page">
+
+<script type="text/javascript">
+(function() {
+   // the DOM is available here
+
+   window.print();
+
+})();
+</script>
+
+<h2>
+    {% if city %}
+        Animations pour l'équipement {{ city }} (quartier {{ region }})
+    {% else %}
+        Animations pour le quartier {{ region }}
+    {% endif %}
+</h2>
+<strong class="date">{{ first_day|event_time:last_day }}</strong>
+
+{% if events %}
+
+
+<div class="week_event_list">
+<hr />
+{% for event in events %}
+    <div class="week_event">
+
+        <h3>
+            {% if event.global_event %}<img src="/media/img/icon-globe.png" style="width:20px" /> </a>{% endif %}
+            {{ event.title }}
+        </h3>
+
+        <div>
+            <strong class="date">{{ event.start_time|event_time:event.end_time }}</strong>
+        </div>
+
+        <br />
+
+        {% if event.venue %}
+          <div><strong>{{ event.venue}}</strong></div>
+        {% endif %}
+
+        {% if event.address %}
+          <div>{{ event.address}}</div>
+        {% endif %}
+
+        <div>{{ event.city }}</div>
+
+        <br />
+
+        {% if event.url %}
+          <div>{% trans "Site internet" %} : <a href="{{ event.url }}">{{ event.url }}</a></div>
+        {% endif %}
+
+        <div>
+          {% trans "Contact" %} :
+          {{ event.contact }} <a href="mailto:{{ event.contact_email }}">({{ event.contact_email }})</a>
+        </div>
+
+        <hr />
+
+    </div>
+{% endfor %}
+</div>
+
+{% else %}
+
+    <p>Aucun événement cette semaine.</p
+
+{% endif %}
+
+</div>
+{% endblock %}

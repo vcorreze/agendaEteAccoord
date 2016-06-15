@@ -19,7 +19,7 @@
 #
 
 from collections import OrderedDict
-from datetime import date, timedelta
+from datetime import date, timedelta, datetime
 
 from django.shortcuts import render_to_response, HttpResponseRedirect
 from django.core.urlresolvers import reverse
@@ -44,7 +44,7 @@ from django.conf import settings
 @login_required
 def propose(request, template_name="events/event_new.html"):
     if request.method == "POST":
-        form = EventForm(request.POST)
+        form = EventForm(request.POST, request.FILES)
         if form.is_valid():
             e = form.save()
             moderator = e.city.region.moderator
@@ -75,7 +75,7 @@ def edit(request, event_id, template_name="events/event_edit.html"):
         raise PermissionDenied()
 
     if request.method == "POST":
-        form = EventForm(request.POST, instance=event)
+        form = EventForm(request.POST, request.FILES, instance=event)
         if form.is_valid():
             e = form.save()
             return HttpResponseRedirect(reverse("event_detail", args=[event_id]))
@@ -222,8 +222,44 @@ def month(request, year, month,
         "form": form,
         "region": region,
         "city": city,
-        "regions": Region.objects.all()
+        "regions": Region.objects.all(),
+        "view_type": request.GET.get('view_type', 'calendar')  # 'calendar' or 'map'
     })
+
+
+def print_week(request, start_year, start_month, start_day, region_id, city_id=None):
+    try:
+        region = Region.objects.get(pk=region_id)
+    except Region.DoesNotExist:
+        return HttpResponseNotFound()
+
+    if city_id:
+        try:
+            city = City.objects.get(pk=city_id)
+        except City.DoesNotExist:
+            return HttpResponseNotFound()
+    else:
+        city = None
+
+    first_day = datetime(int(start_year), int(start_month), int(start_day))
+    last_day = first_day + timedelta(6)
+
+    # Filter events for given region/city, include global events
+    events = Event.get_moderated_events(
+        first_day,
+        last_day,
+        region=region,
+        city=city
+    )
+
+    return TemplateResponse(request, 'events/event_archive_week_print.html', {
+        'region': region,
+        'city': city,
+        'first_day': first_day,
+        'last_day': last_day,
+        'events': events
+    })
+
 
 @login_required
 def moderate_my_events(request):

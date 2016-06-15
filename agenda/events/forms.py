@@ -39,13 +39,29 @@ class EventForm(forms.ModelForm):
              year + 1,
              year + 2]
 
-    start_time = forms.DateTimeField(label="Débute le", \
-        widget=SplitSelectDateTimeWidget(hour_step=1, \
-        minute_step=15, second_step=30, twelve_hr=False, years=years))
+    start_time = forms.DateTimeField(
+        label="Débute le",
+        help_text="Laissez à 00:00 si l'événement n'a pas encore (ou n'aura pas) d'heure de début.",
+        widget=SplitSelectDateTimeWidget(
+            hour_step=1,
+            minute_step=15,
+            second_step=30,
+            twelve_hr=False, years=years
+        )
+    )
 
-    end_time = forms.DateTimeField(label="Se termine le", \
-        widget=SplitSelectDateTimeWidget(hour_step=1, \
-        minute_step=15, second_step=30, twelve_hr=False, years=years))
+    end_time = forms.DateTimeField(
+        label="Se termine le",
+        help_text="Laissez à 00:00 si l'événement n'a pas encore (ou n'aura pas) d'heure de fin. "
+                  "Requis si une heure de début est fournie.",
+        widget=SplitSelectDateTimeWidget(
+            hour_step=1,
+            minute_step=15,
+            second_step=30,
+            twelve_hr=False,
+            years=years
+        )
+    )
 
     city = EventCityChoiceField(
         City.objects.all().order_by('region__name', 'name'),
@@ -53,13 +69,21 @@ class EventForm(forms.ModelForm):
         label="Équipement"
     )
 
-    captcha = ReCaptchaField(attrs={'theme' : 'clean'})
+    image = forms.ImageField(
+        label="Image",
+        help_text="Image qui s'affichera sous la description. L'image sera affichée sans "
+                  "redimentionnement automatique, merci de l'optimiser au préalable pour "
+                  "un affichage web.",
+        widget=forms.ClearableFileInput, required=False
+    )
+
+    captcha = ReCaptchaField(attrs={'theme': 'clean'})
 
     class Meta:
-      model = Event
-      exclude = ("submission_time", "updated_time", "decision_time",
-                 "moderator", "moderated", "latitude", "longitude",
-                 "banner", "spotlight", "announced", "twitter")
+        model = Event
+        exclude = ("submission_time", "updated_time", "decision_time",
+                   "moderator", "moderated", "latitude", "longitude",
+                   "banner", "spotlight", "announced", "twitter")
 
     def __init__(self, *args, **kwargs):
         super(EventForm, self).__init__(*args, **kwargs)
@@ -67,29 +91,54 @@ class EventForm(forms.ModelForm):
         if not settings.RECAPTCHA_ENABLE:
             del self.fields['captcha']
 
+        # Set start_time and end_time to today
+        today = datetime.now().date()
+        today_datetime = datetime.combine(today, datetime.min.time())
+        self.fields['start_time'].initial = today_datetime
+        self.fields['end_time'].initial = today_datetime
+
     def clean(self):
-      cleaned_data = self.cleaned_data
-      start_time = cleaned_data.get("start_time")
-      end_time = cleaned_data.get("end_time")
+        cleaned_data = self.cleaned_data
+        start_time = cleaned_data.get("start_time")
+        end_time = cleaned_data.get("end_time")
 
-      if not (start_time and end_time):
+        if not (start_time and end_time):
+            return cleaned_data
+
+        start_date = start_time.date()
+        has_start_hour = not (start_time.hour == 0 and start_time.minute == 0)
+
+        end_date = end_time.date()
+        has_end_hour = not(end_time.hour == 0 and end_time.minute == 0)
+
+        has_hour = has_start_hour or has_end_hour
+
+        today = datetime.now().date()
+
+        # Note : we allow start_time == end_time
+
+        if start_date < today:
+            msg = u"Seul les événements à venir sont acceptés"
+            self._errors["start_time"] = ErrorList([msg])
+            del cleaned_data["start_time"]
+
+        # If there is no hours, check only dates
+        elif not has_hour and start_date > end_date:
+            msg = u"L'événement ne peut se terminer avant son début"
+            self._errors["start_time"] = ErrorList([msg])
+            self._errors["end_time"] = ErrorList([msg])
+            del cleaned_data["start_time"]
+            del cleaned_data["end_time"]
+
+        # Else check full datetime
+        elif start_time > end_time:
+            msg = u"L'événement ne peut se terminer avant son début"
+            self._errors["start_time"] = ErrorList([msg])
+            self._errors["end_time"] = ErrorList([msg])
+            del cleaned_data["start_time"]
+            del cleaned_data["end_time"]
+
         return cleaned_data
-
-      if start_time >= end_time:
-        msg = u"L'événement ne peut se terminer avant son début"
-        self._errors["start_time"] = ErrorList([msg])
-        self._errors["end_time"] = ErrorList([msg])
-
-        del cleaned_data["start_time"]
-        del cleaned_data["end_time"]
-
-      elif start_time < datetime.today():
-        msg = u"Seul les événements à venir sont acceptés"
-        self._errors["start_time"] = ErrorList([msg])
-
-        del cleaned_data["start_time"]
-
-      return cleaned_data
 
 
 class RegionFilterForm(forms.Form):
@@ -101,8 +150,8 @@ class RegionFilterForm(forms.Form):
         label=u"Quartier",
         widget=forms.Select(
             attrs={
-                #"onchange":"document.getElementById('filter').submit();"
-                "style": "visibility: hidden"
+                # "onchange":"document.getElementById('filter').submit();"
+                "style": "display: none"
             }
         )
     )
@@ -112,5 +161,5 @@ class RegionFilterForm(forms.Form):
         empty_label=u"Tous les équipements",
         required=False,
         label=u"Équipements",
-        widget=forms.Select(attrs={"onchange":"document.getElementById('filter').submit();"})
+        widget=forms.Select(attrs={"onchange": "document.getElementById('filter').submit();"})
     )
