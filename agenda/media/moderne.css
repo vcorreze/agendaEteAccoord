@@ -1,4 +1,6 @@
-/* Copyright 2006
+/* Copyright 2016
+ * - Vincent Corrèze <si CHEZ accoord POINT fr>
+ * - Sylvain Boureliou <sylvain.boureliou CHEZ gmail POINT com>
  * - Erwan Leherisse  <air1ontheweb CHEZ free POINT fr>
  * - Melanie Bats  <melanie POINT bats CHEZ utbm POINT fr>
  * - Thomas Petazzoni  <thomas POINT petazzoni CHEZ enix POINT org>
@@ -24,7 +26,7 @@
 body {
     background-color: #ffed00;
     color: #565656;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: 'Open Sans', sans-serif;
     font-size: 11pt;
 }
 
@@ -101,7 +103,7 @@ div.header div.actions div.action img {
 
 h1 {
     clear: both;
-    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-family: 'Dosis', sans-serif;
     background-color: #fff;
     font-size: 1.6em;
     margin: 0;
@@ -110,6 +112,7 @@ h1 {
 }
 
 h2 {
+     font-family: 'Dosis', sans-serif;
     color: #5d6064;
     margin-top: 0;
 }
@@ -285,7 +288,7 @@ p.error {
 }
 
 #advises h1 {
-    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-family: 'Dosis', sans-serif;
     color: #5d6064;
 }
 
