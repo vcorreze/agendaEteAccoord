@@ -218,25 +218,45 @@ class Event (models.Model):
   @staticmethod
   def get_moderated_events(start_day, end_day, region=None, city=None):
       # Filter events for given region/city, include global events
+      # !!!! start_day and end_day must be datetime.date objects
 
+      # Filter on region and city
       if region is not None:
           if city is not None:
-              q = Q(city__region=region, city=city)
+              q_where = Q(city__region=region, city=city)
           else:
-              q = Q(city__region=region)
+              q_where = Q(city__region=region)
       else:
-          q = Q()
+          q_where = Q()
 
-      # Include global events
-      q = q | Q(global_event=True)
+      # Include global events, and keep only moderated events
+      q = ((q_where | Q(global_event=True)) & Q(moderated=True))
 
-      event_list = (Event.objects
-                    .filter(start_time__gte=start_day)
-                    .filter(end_time__lte=end_day)
-                    .filter(moderated=True)
-                    .filter(q))
+      # OLD filter in start_time and end_time
+      #event_list = (Event.objects
+      #              .filter(start_time__gte=start_day)
+      #              .filter(end_time__lte=end_day)
+      #              .filter(q))
 
-      return event_list
+      # Keep events where :
+      # (1) e.start_time or e.end_time is in [start_day, end_day]
+      #   => ok if the event is in the asked period
+      #   => ok if the event only starts before or only ends after
+      # (2) e.start_time < start_day and e.end_time > end_day
+      #   => event starts before and ends after the asked period
+
+      q_1 = (
+          Q(start_time__gte=start_day) & Q(start_time__lte=end_day)
+      ) | Q(
+          Q(end_time__gte=start_day) & Q(end_time__lte=end_day)
+      )
+
+      q_2 = (Q(start_time__lt=start_day) & Q(end_time__gt=end_day))
+
+      # Final query
+      q = q & Q(q_1 | q_2)
+
+      return Event.objects.filter(q).order_by('start_time')
 
 
 post_save.connect(Event.geocode, sender=Event, dispatch_uid="geocode_event")

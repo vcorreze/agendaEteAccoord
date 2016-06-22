@@ -246,8 +246,8 @@ def print_week(request, start_year, start_month, start_day, region_id, city_id=N
 
     # Filter events for given region/city, include global events
     events = Event.get_moderated_events(
-        first_day,
-        last_day,
+        first_day.date(),
+        last_day.date(),
         region=region,
         city=city
     )
