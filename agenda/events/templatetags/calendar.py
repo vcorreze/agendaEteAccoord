@@ -176,7 +176,7 @@ def month_cal_map(year, month, region=None, city=None):
             "type": "Feature",
             "properties": {
                 "popupContent": popupContent,
-                "regionId": region.id
+                "regionId": event.city.region.id
             },
             "geometry": {
                 "type": "Point",
