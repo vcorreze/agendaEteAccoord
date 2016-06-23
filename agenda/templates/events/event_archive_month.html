@@ -111,6 +111,8 @@
             <a href="?region={{ r.pk }}&view_type={{ view_type }}" title="{{ r }}">{{ r }}</a></strong>
             {% if not forloop.last %} - {% endif %}
           {% endfor %}
+          <br />
+          <strong><a href="?region=-1&view_type=map" title="{{ r }}">Voir la carte de tous les quartiers</a></strong>
         </p>
 
     {% endif %}
