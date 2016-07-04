@@ -215,6 +215,15 @@ def month(request, year, month,
     else:
         form = RegionFilterForm()
 
+    # View type => 'calendar' or 'map'
+    view_type = request.GET.get('view_type', 'calendar')
+    if request.GET.get('region') == '-1':
+        # force 'map' view (map for all regions)
+        view_type = 'map'
+
+    # Is home page ? => if no selected region and the full map is not asked
+    is_home_page = region is None and not request.GET.get('region') == '-1'
+
     return TemplateResponse(request, template_name, {
         "month": month,
         "previous_month": previous,
@@ -223,7 +232,8 @@ def month(request, year, month,
         "region": region,
         "city": city,
         "regions": Region.objects.all(),
-        "view_type": request.GET.get('view_type', 'calendar')  # 'calendar' or 'map'
+        "view_type": view_type,
+        "is_home_page": is_home_page
     })
 
 

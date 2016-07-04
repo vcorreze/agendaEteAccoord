@@ -227,10 +227,15 @@ class Event (models.Model):
           else:
               q_where = Q(city__region=region)
       else:
-          q_where = Q()
+          q_where = None
 
-      # Include global events, and keep only moderated events
-      q = ((q_where | Q(global_event=True)) & Q(moderated=True))
+      if q_where is not None:
+          # We have only events for a given region (and or city)
+          # Include global events, and keep only moderated events
+          q = ((q_where | Q(global_event=True)) & Q(moderated=True))
+      else:
+          # We have events for all regions, keep only moderated events
+          q = Q(moderated=True)
 
       # OLD filter in start_time and end_time
       #event_list = (Event.objects
@@ -256,7 +261,7 @@ class Event (models.Model):
       # Final query
       q = q & Q(q_1 | q_2)
 
-      return Event.objects.filter(q).order_by('start_time')
+      return Event.objects.filter(q).select_related('city', 'city__region').order_by('start_time')
 
 
 post_save.connect(Event.geocode, sender=Event, dispatch_uid="geocode_event")

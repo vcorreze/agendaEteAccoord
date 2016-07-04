@@ -4,7 +4,7 @@
 {% load i18n %}
 
 {% block extrahead %}
-  {% if view_type == 'map' %}
+  {% if view_type == 'map' or view_type == 'full_map' %}
     <link rel="stylesheet" href="/media/js/leaflet/leaflet.css" />
     <script src="/media/js/leaflet/leaflet.js"></script>
 
@@ -16,7 +16,7 @@
   {% endif %}
 {% endblock extrahead %}
 
-{% block bodyclass %}{% if region %}grand-quartier-{{ region.pk }}{% else %}home-page{% endif %}{% endblock bodyclass %}
+{% block bodyclass %}{% if region %}grand-quartier-{{ region.pk }}{% endif %}{% if is_home_page %}home-page{% endif %}{% endblock bodyclass %}
 
 {% block mainh1 %}{% if region %}<a href="?region={{ region.pk }}">{{ region }} / </a>{% endif %}{% endblock mainh1 %}
 
@@ -34,55 +34,88 @@
 
 {% block content %}
 
-  {% if region %}
+  {% if not is_home_page %}
 
-    <h2 class="calendar">
-      <a href="{% url 'month_view' previous_month.year previous_month.month %}?region={{ region.id }}&city={{ city.id }}&view_type={{ view_type }}"
-         title="{% trans 'Aller au mois de' %} {{ previous_month|date:"F Y" }}"><img id="arrow" src="/media/img/go-previous.png"></a>
-      {{ month|date:"F Y" }}
-      <a href="{% url 'month_view' next_month.year next_month.month %}?region={{ region.id }}&city={{ city.id }}&view_type={{ view_type }}"
-         title="{% trans 'Aller au mois de' %} {{ next_month|date:"F Y" }}">
-         <img id="arrow" src="/media/img/go-next.png">
-      </a>
-    </h2>
+    {% if region %}
 
+        {% comment %} Region's calendar or map {% endcomment %}
+        <h2 class="calendar">
+          <a href="{% url 'month_view' previous_month.year previous_month.month %}?region={{ region.id }}&city={{ city.id }}&view_type={{ view_type }}"
+             title="{% trans 'Aller au mois de' %} {{ previous_month|date:"F Y" }}"><img id="arrow" src="/media/img/go-previous.png"></a>
+          {{ month|date:"F Y" }}
+          <a href="{% url 'month_view' next_month.year next_month.month %}?region={{ region.id }}&city={{ city.id }}&view_type={{ view_type }}"
+             title="{% trans 'Aller au mois de' %} {{ next_month|date:"F Y" }}">
+             <img id="arrow" src="/media/img/go-next.png">
+          </a>
+        </h2>
 
-    <form id="filter">
-      <strong>Quartier {{ region }} : </strong>
-      {{ form.city }}
+        <form id="filter">
+          <strong>Quartier {{ region }} : </strong>
+          {{ form.city }}
 
-      {% if view_type == 'calendar' %}
-         <a href="{% url 'month_view' month.year month.month %}?region={{ region.id }}&city={{ city.id }}&view_type=map"
-            class="view-link" title="Afficher la carte"
-         ><img src="/media/img/icon-view-map.png" alt="Afficher la carte" /> Afficher la carte</a>
-      {% else %}
-         <a href="{% url 'month_view' month.year month.month %}?region={{ region.id }}&city={{ city.id }}&view_type=calendar"
-            class="view-link" title="Afficher le calendrier"
-         ><img src="/media/img/icon-view-calendar.png" alt="Afficher le calendrier" /> Afficher le calendrier</a>
-      {% endif %}
+          {% if view_type == 'calendar' %}
+             <a href="{% url 'month_view' month.year month.month %}?region={{ region.id }}&city={{ city.id }}&view_type=map"
+                class="view-link" title="Afficher la carte"
+             ><img src="/media/img/icon-view-map.png" alt="Afficher la carte" /> Afficher la carte</a>
+          {% else %}
+             <a href="{% url 'month_view' month.year month.month %}?region={{ region.id }}&city={{ city.id }}&view_type=calendar"
+                class="view-link" title="Afficher le calendrier"
+             ><img src="/media/img/icon-view-calendar.png" alt="Afficher le calendrier" /> Afficher le calendrier</a>
+          {% endif %}
 
-      {{ form.region }}
-      <input type="hidden" name="view_type" value="{{ view_type }}" />
-      <noscript><input type="submit" value="{% trans 'Appliquer' %}" /></noscript>
-    </form>
+          {{ form.region }}
+          <input type="hidden" name="view_type" value="{{ view_type }}" />
+          <noscript><input type="submit" value="{% trans 'Appliquer' %}" /></noscript>
+        </form>
 
-    <br />
+        <br />
 
-    {% if view_type == 'map' %}
-      {% month_cal_map month.year month.month region city %}
+        {% if view_type == 'map' %}
+          {% month_cal_map month.year month.month region city %}
+        {% endif %}
+
+        {% if view_type == 'calendar' %}
+          {% month_cal month.year month.month region city %}
+        {% endif %}
+
+        <p style="text-align: center">
+          <strong>Choisir un autre grand quartier : </strong>
+          {% for r in regions %}
+            <a href="?region={{ r.pk }}&view_type={{ view_type }}" title="{{ r }}">{{ r }}</a>
+            {% if not forloop.last %} - {% endif %}
+          {% endfor %}
+          {% if view_type == 'map' %}
+            <br />
+            <strong><a href="?region=-1&view_type=map" title="Voir la carte de tous les quartiers">Voir la carte de tous les quartiers</a></strong>
+          {% endif %}
+        </p>
+
+    {% else %}
+
+        {% comment %} Map for all regions {% endcomment %}
+        <h2 class="calendar">
+          <a href="{% url 'month_view' previous_month.year previous_month.month %}?region=-1&view_type=map"
+             title="{% trans 'Aller au mois de' %} {{ previous_month|date:"F Y" }}"><img id="arrow" src="/media/img/go-previous.png"></a>
+          {{ month|date:"F Y" }}
+          <a href="{% url 'month_view' next_month.year next_month.month %}?region=-1&view_type=map"
+             title="{% trans 'Aller au mois de' %} {{ next_month|date:"F Y" }}">
+             <img id="arrow" src="/media/img/go-next.png">
+          </a>
+        </h2>
+
+        {% month_cal_map month.year month.month %}
+
+        <p style="text-align: center">
+          <strong>Choisir un grand quartier : </strong>
+          {% for r in regions %}
+            <a href="?region={{ r.pk }}&view_type={{ view_type }}" title="{{ r }}">{{ r }}</a></strong>
+            {% if not forloop.last %} - {% endif %}
+          {% endfor %}
+          <br />
+          <strong><a href="?region=-1&view_type=map" title="Voir la carte de tous les quartiers">Voir la carte de tous les quartiers</a></strong>
+        </p>
+
     {% endif %}
-
-    {% if view_type == 'calendar' %}
-      {% month_cal month.year month.month region city %}
-    {% endif %}
-
-    <p style="text-align: center">
-      <strong>Choisir un autre grand quartier : </strong>
-      {% for r in regions %}
-        <a href="?region={{ r.pk }}&view_type={{ view_type }}" title="{{ r }}">{{ r }}</a></strong>
-        {% if not forloop.last %} - {% endif %}
-      {% endfor %}
-    </p>
 
   {% else %}
 
