@@ -31,3 +31,10 @@ agenda/media/event_images
 
 # Git things
 *.orig
+
+#Personnalisations accoord Sous Copyright
+
+agenda/media/img/accueil-image-carte.png
+agenda/media/img/accueil-image-de-fond.jpg
+agenda/media/img/logo-accoord.png
+agenda/media/img/logo.png
