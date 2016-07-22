@@ -22,6 +22,7 @@ etc
 var
 agenda/production.py
 agenda/development.py
+conf/ssl/*
 
 # Development database
 agendadulibre.sqlite
