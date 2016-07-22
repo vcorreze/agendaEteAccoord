@@ -3,7 +3,7 @@
 import agenda
 import os
 
-DEBUG = True
+DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 PROJECT_ROOT = os.path.dirname(agenda.__file__)
 
@@ -127,7 +127,7 @@ FORCE_SCRIPT_NAME = ''
 MAX_TAG_LENGTH = 255
 
 FROM_EMAIL = "noreply@accoord.fr"
-ENABLE_MAIL = False
+ENABLE_MAIL = True
 
 LOGIN_URL = "/login"
 

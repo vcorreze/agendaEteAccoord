@@ -29,5 +29,5 @@ agendadulibre.sqlite
 # Images uploaded by users on events
 agenda/media/event_images
 
-# Merge pb files
+# Git things
 *.orig
