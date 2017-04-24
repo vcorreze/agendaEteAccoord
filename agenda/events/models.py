@@ -136,7 +136,7 @@ class Event (models.Model):
 
   moderator = models.ForeignKey(User, blank=True, null=True, related_name="moderated_events")
 
-  moderated = models.BooleanField(default=False)
+  moderated = models.BooleanField(default=True)
   announced = models.BooleanField(default=False)
 
   submiter_email = models.EmailField(max_length=200, verbose_name="Votre courriel",
