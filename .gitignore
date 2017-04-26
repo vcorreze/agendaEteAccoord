@@ -22,7 +22,7 @@ etc
 var
 agenda/production.py
 agenda/development.py
-conf/ssl/*
+etc/ssl/*
 
 # Development database
 agendadulibre.sqlite
