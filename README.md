@@ -77,7 +77,7 @@ version de nginx et de uwsgi qui serviront l'agenda.
 Vous n'avez donc qu'à suivre les étapes suivantes:
 
     $ # su - root
-    $ apt-get install make gcc python-dev build-essential zlib1g-dev libpcre3 libpcre3-dev libbz2-dev libssl-dev tar unzip
+    $ apt-get install make gcc python-dev build-essential zlib1g-dev libpcre3 libpcre3-dev libbz2-dev libssl-dev tar unzip libjpeg-dev
     $ apt-get install libpq-dev postgresql postgresql-server-dev-9.4 postgresql-client 
     $ # Si vous souhaitez envoyer des emails depuis le serveur - https://wiki.debian.org/Postfix
     $ apt-get install postfix
