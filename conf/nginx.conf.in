@@ -48,14 +48,14 @@ http {
     charset     utf-8;
 
     # certs set to the client in SERVER HELLO are concatenated in ssl_certificate
-    ssl_certificate /pat/to/your/certfile.crt;
-    ssl_certificate_key /path/to/your/keyfile.key;
+    ssl_certificate ${buildout:directory}/etc/ssl/cert.pem;
+    ssl_certificate_key ${buildout:directory}/etc/ssl/privkey.pem;
     ssl_session_timeout 1d;
     ssl_session_cache shared:SSL:50m;
     ssl_session_tickets off;
 
     # DIffie-Hellman parameter for DHE ciphersuites, recommanded 2048 bits
-    ssl_dhparam /path/to/your/dhparam.pem;
+    ssl_dhparam ${buildout:directory}/etc/ssl/dhparam.pem;
 
     # intermediate configuration.tweak
     ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
@@ -71,8 +71,7 @@ http {
     ssl_stapling_verify on;
 
     ## verify chain of trust of OCSP response using Root CA and Intermediate certs
-    ssl_trusted_certificate /path/to/your/CACert.ca-bundle;
-
+    ssl_trusted_certificate ${buildout:directory}/etc/ssl/fullchain.pem;
         
     # Django admin media.
     location /admin_media/ {
