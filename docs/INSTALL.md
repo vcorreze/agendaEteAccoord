@@ -213,4 +213,4 @@ Les 3 URis utiles sont :
     - https://agenda.MyDomain.fr/admin/
     - https://agenda.MyDomain.fr/login/
 
-EOF
+:sparkles:
