@@ -2,6 +2,8 @@
 #  Django settings for agenda project.
 import agenda
 import os
+import sys
+import codecs
 
 DEBUG = False
 TEMPLATE_DEBUG = DEBUG
@@ -23,6 +25,11 @@ DATABASES = {
         "PORT": '',
         }
     }
+
+# Setting python IO encoding as per 
+# http://chase-seigert.github.io/blog/2014/01/12/python-unicode-console-output.html
+sys.stdout = codecs.getwriter('utf8')(sys.stdout)
+sys.stderr = codecs.getwriter('utf8')(sys.stderr)
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
