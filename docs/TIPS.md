@@ -36,4 +36,13 @@ Si l'envoi des emails est mal configuré, il est possible de rediriger l'écritu
 en ajoutant la variable suivante dans le fichier agenda/production.py : `EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'`.
 Les emails envoyés sont alors écrits dans le fichier var/log/uwsgi.log
 
+Démarrer supervisord au boot
+----------------------------
+
+Pour que l'agenda démarre au boot, il faut lancer supervisord via le cron de l'utilisateur. Il suffit de coller la
+ligne suivante dans le cron de l'utilisateur choisi (`crontab -e`) :
+
+```
+@reboot /home/{myuser}/agendaEteAccoord/bin/supervisord -c /home/{myuser}/agendaEteAccooord/parts/supervisor/supervisord.conf 2>&1
+```
 :sparkles:
